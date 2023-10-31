@@ -7,11 +7,12 @@
             {{task.title}}
         </h3>
         <p>
-            {{task.created}}
+            {{task.date_created}}
         </p>
         {{> post}}
     </section>
     <aside>
+        <h2>Comments:</h2>
         {{#each task.comments as |comment|}}
         {{> comment}}
         {{/each}}
