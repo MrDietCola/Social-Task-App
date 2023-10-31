@@ -1,0 +1,20 @@
+<div id="task-page-body">
+    <section>
+        <a href="/user/{{task.user}}">
+            {{task.user}}
+        </a>
+        <h3>
+            {{task.title}}
+        </h3>
+        <p>
+            {{task.date_created}}
+        </p>
+        {{> post}}
+    </section>
+    <aside>
+        <h2>Comments:</h2>
+        {{#each task.comments as |comment|}}
+        {{> comment}}
+        {{/each}}
+    </aside>
+</div>
