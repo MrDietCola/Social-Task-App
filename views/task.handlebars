@@ -1,15 +1,16 @@
 <div id="task-page-body">
     <section>
-        <a href="/user/{{task.user}}">
-            {{task.user}}
-        </a>
         <h3>
             {{task.title}}
         </h3>
+        <a href="/user/{{task.author_id}}">
+            {{task.user.username}}
+        </a>
         <p>
             {{task.date_created}}
         </p>
         {{> post}}
+        {{format_tag task.task_by_taskTag}}
     </section>
     <aside>
         <h2>Comments:</h2>

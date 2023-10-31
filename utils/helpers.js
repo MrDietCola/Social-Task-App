@@ -20,7 +20,7 @@ module.exports = {
     }
   },
   format_tag: (tags) => {
-    console.log(tags);
+    tags = tags.map((tagObj) => tagObj.tag_name)
     if (tags.length < 1) {
       return "untagged";
     }

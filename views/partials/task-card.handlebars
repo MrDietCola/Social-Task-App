@@ -1,7 +1,7 @@
 <section>
-    <h4>{{title}}</h4>
-    <p>{{user}}</p>
+    <h4><a href="/tasks/{{id}}">{{title}}</a></h4>
+    <a href="/user/{{author_id}}">{{user.username}}</a>
     <p>{{date_created}}</p>
     <p>{{description}}</p>
-    <p>{{format_tag tags}}</p>
+    <p>{{format_tag task_by_taskTag}}</p>
 </section>
