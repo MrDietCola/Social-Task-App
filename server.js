@@ -34,6 +34,9 @@ app.use(session(sess));
 // Inform Express.js on which template engine to use
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+//aded to acces images
+app.use("/images", express.static(path.join(__dirname, "/public/images")));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
