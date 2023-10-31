@@ -1,37 +1,11 @@
 const router = require('express').Router();
 const { Friends } = require('../../models');
 
-// GET all friends
-router.get('/', async (req, res) => {
-  try {
-    const categoryData = await Category.findAll();
-    res.status(200).json(categoryData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// GET one friend
-router.get('/:id', async (req, res) => {
-  try {
-    const categoryData = await Category.findByPk(req.params.id, {
-      include: [{ model: Product }]
-    });
-    if (!categoryData) {
-      res.status(404).json({ message: 'No category with this id!' });
-      return;
-    }
-    res.status(200).json(categoryData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // CREATE one friend
 router.post('/', async (req, res) => {
   try {
-    const categoryData = await Category.create(req.body);
-    res.status(200).json(categoryData);
+    const friendsData = await Friends.create(req.body);
+    res.status(200).json(friendsData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -40,18 +14,18 @@ router.post('/', async (req, res) => {
 // delete a friend
 router.delete('/:id', async (req, res) => {
   try {
-    const categoryData = await Category.destroy({
+    const friendsData = await Friends.destroy({
       where: {
         id: req.params.id,
       },
     });
 
-    if (!categoryData) {
-      res.status(404).json({ message: 'No category found with that id!' });
+    if (!friendsData) {
+      res.status(404).json({ message: 'No friends found with that id!' });
       return;
     }
 
-    res.status(200).json(categoryData);
+    res.status(200).json(friendsData);
   } catch (err) {
     res.status(500).json(err);
   }
