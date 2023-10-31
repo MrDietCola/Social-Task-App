@@ -11,7 +11,7 @@ User.hasMany(Task, {
 });
 
 User.hasMany(Friends, {
-  foreignKey: 'friend_id',
+  foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
 
