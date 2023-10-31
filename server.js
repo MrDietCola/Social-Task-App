@@ -36,6 +36,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 //aded to acces images
 app.use("/images", express.static(path.join(__dirname, "/public/images")));
+// app.use("/api", express.static(path.join(__dirname, "/controllers/api")));
 
 
 app.use(express.json());
