@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Task, Tag, Comments } = require('../models');
+const { User, Task, Tag, Comments, TaskTag } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -86,51 +86,31 @@ router.get('/tasks', async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['name']
+        attributes: ['username']
       },
       {
         model: Tag,
+        through: TaskTag,
         attributes: ['tag_name'],
         as: 'task_by_taskTag'
       },
     ]
   })
   // Serialize data so the template can read it
-  // const tasks = tasksData.map((task) => task.get({ plain: true }));
-  const tasks = [{
-    title: "TaskTestTitle",
-    user: "ExampleUser",
-    date_created: "00/00/0000",
-    description: "This is the description of this task! look at how well this task is doing! oh my goodness look at this task. Don't you want to participate in it??",
-    tags: ["epic", "cool", "awesome"],
-  },
-  {
-    title: "TaskTestTitle",
-    user: "ExampleUser",
-    date_created: "00/00/0000",
-    description: "This is the description of this task! look at how well this task is doing! oh my goodness look at this task. Don't you want to participate in it??",
-    tags: ["epic", "cool", "awesome"],
-  },
-  {
-    title: "TaskTestTitle",
-    user: "ExampleUser",
-    date_created: "00/00/0000",
-    description: "This is the description of this task! look at how well this task is doing! oh my goodness look at this task. Don't you want to participate in it??",
-    tags: ["epic", "cool", "awesome"],
-  }]
+  const tasks = tasksData.map((task) => task.get({ plain: true }));
   console.log(tasks);
   res.render('tasks', { tasks });
 });
 
 router.get('/tasks/:id', async (req, res) => {
-  const taskData = await Task.findAll({
+  const taskData = await Task.findByPk(req.params.id, {
     where: {
       public: true
     },
     include: [
       {
         model: User,
-        attributes: ['name', 'email']
+        attributes: ['username', 'email']
       },
       {
         model: Tag,
@@ -138,29 +118,19 @@ router.get('/tasks/:id', async (req, res) => {
         as: 'task_by_taskTag'
       },
       {
-        model: Comments
+        model: Comments,
+
+        include: [{
+          model: User,
+          attributes: ['username'],
+          foreignKey: "author_id",
+        }]
       }
     ]
   })
 
   // Serialize data so the template can read it
-  // const task = taskData.map((task) => task.get({ plain: true }));
-  const task = {
-    title: "TaskTestTitle",
-    user: "ExampleUser",
-    date_created: "00/00/0000",
-    description: "This is the description of this task! look at how well this task is doing! oh my goodness look at this task. Don't you want to participate in it??",
-    tags: ["epic", "cool", "awesome"],
-    comments: [
-      {
-        id: 1,
-        comment_text: 'wow amazing project',
-        date_created: '00/00/000',
-        author_id: 5,
-        task_id: 7
-      }
-    ]
-  }
+  const task = taskData.get({ plain: true });
   res.render('task', { task })
 });
 
