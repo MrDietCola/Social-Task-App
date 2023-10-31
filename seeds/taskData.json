@@ -1,0 +1,62 @@
+[
+    {
+        "title": "test title no 1",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": true,
+        "author_id": 1
+    },
+    {
+        "title": "test title no 2",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": true,
+        "author_id": 2
+    },
+    {
+        "title": "test title no 3",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": true,
+        "author_id": 3
+    },
+    {
+        "title": "test title no 4",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": true,
+        "author_id": 4
+    },
+    {
+        "title": "test title no 5",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": true,
+        "author_id": 5
+    },
+    {
+        "title": "test title no 6",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": false,
+        "author_id": 1
+    },
+    {
+        "title": "test title no 7",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": false,
+        "author_id": 2
+    },
+    {
+        "title": "test title no 8",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": false,
+        "author_id": 3
+    },
+    {
+        "title": "test title no 9",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": false,
+        "author_id": 4
+    },
+    {
+        "title": "test title no 10",
+        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
+        "public": false,
+        "author_id": 5
+    }
+]
