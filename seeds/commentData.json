@@ -1,0 +1,57 @@
+[
+    {
+        "comment_text": "This is a pretty cool project! I think you should also touch grass",
+        "author_id": 1,
+        "task_id": 1
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also upload a demo to youtube",
+        "author_id": 2,
+        "task_id": 2
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also add accessibility options",
+        "author_id": 3,
+        "task_id": 3
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also add further modularization",
+        "author_id": 4,
+        "task_id": 4
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also consider OOP principles",
+        "author_id": 5,
+        "task_id": 5
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also work on documentation",
+        "author_id": 6,
+        "task_id": 1
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also post pictures of your pet!",
+        "author_id": 7,
+        "task_id": 2
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also write a README",
+        "author_id": 8,
+        "task_id": 3
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also share your source code",
+        "author_id": 9,
+        "task_id": 4
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also share your work playlist",
+        "author_id": 10,
+        "task_id": 5
+    },
+    {
+        "comment_text": "This is a pretty cool project! I think you should also add me as a friend",
+        "author_id": 11,
+        "task_id": 6
+    }
+]
