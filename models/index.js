@@ -1,0 +1,47 @@
+const User = require('./User');
+const Task = require('./Task');
+const TaskTag = require('./TaskTag');
+const Tag = require('./Tag');
+const Comments = require('./Comments');
+const Friends = require('./Friends');
+
+User.hasMany(Task, {
+  foreignKey: 'author_id',
+  onDelete: 'CASCADE'
+});
+
+User.hasMany(Friends, {
+  foreignKey: 'friend_id',
+  onDelete: 'CASCADE'
+});
+
+Friends.belongsTo(User, {
+  foreignKey: 'friend_id'
+});
+
+Task.belongsTo(User, {
+  foreignKey: 'author_id'
+});
+
+Task.belongsToMany(Tag, {
+  through: {
+    model: TaskTag,
+    unique: false
+  },
+  as: 'task_by_taskTag'
+});
+
+Tag.belongsToMany(Task, {
+  through: {
+    model: TaskTag,
+    unique: false
+  },
+  as: 'tag_by_taskTag'
+})
+
+Task.hasMany(Comments, {
+  foreignKey: 'author_id',
+  onDelete: 'CASCADE'
+})
+
+module.exports = { User, Task, TaskTag, Tag, Comments, Friends };
