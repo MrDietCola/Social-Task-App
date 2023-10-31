@@ -19,4 +19,11 @@ module.exports = {
       return `<span for="img" aria-label="gear">⚙️</span>`;
     }
   },
+  format_tag: (tags) => {
+    tags = tags.map((tagObj) => tagObj.tag_name)
+    if (tags.length < 1) {
+      return "untagged";
+    }
+    return tags.join(", ");
+  }
 };

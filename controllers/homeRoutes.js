@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Task, Tag, Comments, TaskTag } = require('../models');
 const withAuth = require('../utils/auth');
 const axios = require('axios');
 
@@ -102,10 +102,60 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/tasks', async (req, res) => {
+  const tasksData = await Task.findAll({
+    where: {
+      public: true
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['username']
+      },
+      {
+        model: Tag,
+        through: TaskTag,
+        attributes: ['tag_name'],
+        as: 'task_by_taskTag'
+      },
+    ]
+  })
+  // Serialize data so the template can read it
+  const tasks = tasksData.map((task) => task.get({ plain: true }));
+  console.log(tasks);
+  res.render('tasks', { tasks });
+});
 
+router.get('/tasks/:id', async (req, res) => {
+  const taskData = await Task.findByPk(req.params.id, {
+    where: {
+      public: true
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['username', 'email']
+      },
+      {
+        model: Tag,
+        attributes: ['tag_name'],
+        as: 'task_by_taskTag'
+      },
+      {
+        model: Comments,
 
+        include: [{
+          model: User,
+          attributes: ['username'],
+          foreignKey: "author_id",
+        }]
+      }
+    ]
+  })
 
-
-
+  // Serialize data so the template can read it
+  const task = taskData.get({ plain: true });
+  res.render('task', { task })
+});
 
 module.exports = router;

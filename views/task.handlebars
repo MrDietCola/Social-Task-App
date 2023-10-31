@@ -1,0 +1,21 @@
+<div id="task-page-body">
+    <section>
+        <h3>
+            {{task.title}}
+        </h3>
+        <a href="/user/{{task.author_id}}">
+            {{task.user.username}}
+        </a>
+        <p>
+            {{task.date_created}}
+        </p>
+        {{> post}}
+        {{format_tag task.task_by_taskTag}}
+    </section>
+    <aside>
+        <h2>Comments:</h2>
+        {{#each task.comments as |comment|}}
+        {{> comment}}
+        {{/each}}
+    </aside>
+</div>
