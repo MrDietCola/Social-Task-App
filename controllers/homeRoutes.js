@@ -97,9 +97,13 @@ router.get('/tasks', async (req, res) => {
     ]
   })
   // Serialize data so the template can read it
-  const tasks = tasksData.map((task) => task.get({ plain: true }));
-  console.log(tasks);
-  res.render('tasks', { tasks });
+  if (tasksData.length > 0) {
+    const tasks = tasksData.map((task) => task.get({ plain: true }));
+    res.render('tasks', { tasks });
+  }
+  else {
+    res.render('tasks', { tasks: [] })
+  }
 });
 
 router.get('/tasks/:id', async (req, res) => {
@@ -128,10 +132,14 @@ router.get('/tasks/:id', async (req, res) => {
       }
     ]
   })
-
+  if (taskData) {
+    const task = taskData.get({ plain: true });
+    res.render('task', { task })
+  }
+  else {
+    res.redirect('/tasks');
+  }
   // Serialize data so the template can read it
-  const task = taskData.get({ plain: true });
-  res.render('task', { task })
 });
 
 module.exports = router;
