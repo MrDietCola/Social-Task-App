@@ -13,7 +13,6 @@ const options = {
 };
 
 router.get('/', async (req, res) => {
-// third party api route
   try {
     const response = await axios.request(options);
     const quote = response.data.content;
@@ -26,8 +25,7 @@ router.get('/', async (req, res) => {
     console.error(err);
     res.status(500).json(err);
   }
-
-  try {
+  // try {
     // Get all projects and JOIN with user data
     // const projectData = await Project.findAll({
     //   include: [
@@ -42,13 +40,15 @@ router.get('/', async (req, res) => {
     // const projects = projectData.map((project) => project.get({ plain: true }));
 
     // Pass serialized data and session flag into template
-    res.render('landingPage', {
-      layout: 'landing.handlebars'
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
+  //   res.render('landingPage', {
+  //     layout: 'landing.handlebars'
+  //   });
+  // } catch (err) {
+  //   console.error(err);
+  //   res.status(500).json(err);
+  // }
+
+
 });
 
 router.get('/project/:id', async (req, res) => {
