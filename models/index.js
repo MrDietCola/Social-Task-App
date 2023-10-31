@@ -40,8 +40,20 @@ Tag.belongsToMany(Task, {
 })
 
 Task.hasMany(Comments, {
-  foreignKey: 'author_id',
+  foreignKey: 'task_id',
   onDelete: 'CASCADE'
 })
+
+User.hasMany(Comments, {
+  foreignKey: 'author_id',
+  onDelete: 'SET NULL'
+});
+
+Comments.belongsTo(Task, {
+  foreignKey: 'task_id'
+});
+Comments.belongsTo(User, {
+  foreignKey: 'author_id'
+});
 
 module.exports = { User, Task, TaskTag, Tag, Comments, Friends };
