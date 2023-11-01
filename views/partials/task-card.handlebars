@@ -3,5 +3,11 @@
     <a href="/user/{{author_id}}">{{user.username}}</a>
     <p>{{date_created}}</p>
     <p>{{description}}</p>
-    <p>{{format_tag task_by_taskTag}}</p>
+    <ul>
+        {{#each task_by_taskTag as |tag|}}
+        <li>
+            <a href="/tag/{{tag.id}}">{{tag.tag_name}}</a>
+        </li>
+        {{/each}}
+    </ul>
 </section>

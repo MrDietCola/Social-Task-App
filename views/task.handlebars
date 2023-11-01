@@ -10,7 +10,13 @@
             {{task.date_created}}
         </p>
         {{> post}}
-        {{format_tag task.task_by_taskTag}}
+        <ul>
+            {{#each task.task_by_taskTag as |tag|}}
+            <li>
+                <a href="/tag/{{tag.id}}">{{tag.tag_name}}</a>
+            </li>
+            {{/each}}
+        </ul>
     </section>
     <aside>
         <h2>Comments:</h2>
