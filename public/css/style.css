@@ -119,3 +119,20 @@ form {
 .divider::after {
   margin-left: 10px;
 }
+
+#plus {
+  height: 30px;
+}
+
+.search-bar {
+  padding: 5px;
+  background-color: transparent;
+}
+
+#main-container {
+  margin-top: 75px;
+}
+
+a {
+  text-decoration: none;
+}
