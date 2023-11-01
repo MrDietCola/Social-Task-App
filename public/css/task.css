@@ -1,0 +1,36 @@
+*{
+    background-color: aquamarine;
+}
+
+/* #task-page-body{
+    display: column;
+} */
+
+
+.auth-sec{
+    display: flex;
+    border: solid red;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.post-sec{
+    border: solid blue;
+}
+
+aside{
+    border: solid rgb(194, 18, 133);
+}
+
+.post-sec{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}

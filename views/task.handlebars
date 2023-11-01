@@ -1,5 +1,6 @@
+<link rel="stylesheet" href="/css/task.css">
 <div id="task-page-body">
-    <section>
+    <section class="auth-sec">
         <h3>
             {{task.title}}
         </h3>
@@ -9,13 +10,18 @@
         <p>
             {{task.date_created}}
         </p>
-        {{> post}}
-        {{format_tag task.task_by_taskTag}}
     </section>
+     <section class="post-sec">
+            {{> post}}
+            
+            <div>
+        {{format_tag task.task_by_taskTag}}
+       </div>
     <aside>
         <h2>Comments:</h2>
         {{#each task.comments as |comment|}}
         {{> comment}}
         {{/each}}
     </aside>
+     </section>
 </div>
