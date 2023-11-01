@@ -1,9 +1,22 @@
-<section>
-    {{#if tasks}}
-    {{#each tasks as |task|}}
-    {{> task-card}}
-    {{/each}}
-    {{else}}
-    <h3>No posts yet... :( Visit <a href="/profile">your profile</a> to create a new one!</h3>
-    {{/if}}
-</section>
+<div class="row d-flex justify-content-center">
+    <aside class="col-3 d-flex flex-column">
+       {{#if tags}}
+        {{#each tags as |tag|}}
+        {{> tag-card}}
+        {{/each}}
+        {{else}}
+        <h3>No tags yet...</h3>
+        {{/if}} 
+    </aside>
+    <section class="col-8">
+        {{#if tasks}}
+        {{#each tasks as |task|}}
+        {{> task-card}}
+        {{/each}}
+        {{else}}
+        <h3>No posts yet... :( Visit <a href="/profile">your profile</a> to create a new one!</h3>
+        {{/if}}
+    </section>
+</div>
+
+  <script src="./js/profile.js"></script>

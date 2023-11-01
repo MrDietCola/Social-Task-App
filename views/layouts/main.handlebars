@@ -35,7 +35,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/add-task"><img id="plus"
-                src="../../public/images/plus-circle-svgrepo-com.png" alt=""></a>
+                src="/images/plus-circle-svgrepo-com.png" alt=""></a>
           </li>
         </ul>
       </div>
@@ -61,8 +61,10 @@
 
   </div>
   {{#if logged_in}}
-  <script src="./js/logout.js"></script>
+  <script src="/js/logout.js"></script>
   {{else}}
-  <script src="./js/login.js"></script>
+  {{!--
+  <script src="/js/login.js"></script> --}}
   {{/if}}
+</body>
 </html>

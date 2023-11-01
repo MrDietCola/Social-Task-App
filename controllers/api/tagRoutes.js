@@ -19,12 +19,15 @@ router.get('/', async (req, res) => {
 // GET one tag and associated tasks
 router.get('/:id', async (req, res) => {
   try {
-    const userData = await Tag.findByPk(req.params.id, {
+    const data = await Tag.findByPk(req.params.id, {
       include: [
         { model: Task, through: TaskTag, as: 'tag_by_taskTag'},
       ]
     });
-    res.status(200).json(userData);
+    const tagsData = data.get({ plain: true });
+    const tags = tagsData.tag_by_taskTag
+
+    res.status(200).json(tags);
   } catch (err) {
     res.status(500).json(err);
   }

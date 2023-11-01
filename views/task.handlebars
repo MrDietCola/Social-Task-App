@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/css/task.css">
 <div id="task-page-body">
+
     <section class="auth-sec">
         <section>
             <h3>
@@ -26,9 +27,29 @@
             <h2>Comments:</h2>
             <button onclick="openModal()" class="comment-btn">View Comments</button>
         </aside>
+    <section>
+        <h3>
+            {{task.title}}
+        </h3>
+        <a href="/user/{{task.author_id}}">
+            {{task.user.username}}
+        </a>
+        <p>
+            {{task.date_created}}
+        </p>
+        {{> post}}
+        <div>
+            <p>Emotion: {{emotion}}</p>
+            <ul>
+                {{#each task.task_by_taskTag as |tag|}}
+                <li>
+                    <a href="/tag/{{tag.id}}">{{tag.tag_name}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
     </section>
 </div>
-
 <script>
     function openModal() {
         const modal = document.getElementById('commentModal');
