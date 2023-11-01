@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User, Task, Tag, Comments, TaskTag } = require('../models');
 const withAuth = require('../utils/auth');
+const getEmotion = require('../utils/emotion');
 const axios = require('axios');
 
 const options = {
@@ -162,7 +163,8 @@ router.get('/tasks/:id', async (req, res) => {
   })
   if (taskData) {
     const task = taskData.get({ plain: true });
-    res.render('task', { task, logged_in: req.session.logged_in })
+    let emotion = await getEmotion(task.description);
+    res.render('task', { task, logged_in: req.session.logged_in, emotion })
   }
   else {
     res.redirect('/tasks');
