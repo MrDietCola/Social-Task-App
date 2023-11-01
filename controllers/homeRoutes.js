@@ -170,4 +170,54 @@ router.get('/tasks/:id', async (req, res) => {
   // Serialize data so the template can read it
 });
 
+router.get('/user/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, {
+      attributes: { exclude: ['id', 'password'] }
+    });
+
+    // Shows private posts as well if the user page belongs to the current user. 
+    let activeUser;
+    if (req.session.logged_in && req.session.user.id == req.params.id) {
+      activeUser = { author_id: req.params.id }
+    }
+    else {
+      activeUser = {
+        public: true,
+        author_id: req.params.id
+      }
+    }
+
+    const tasksData = await Task.findAll({
+      where: activeUser,
+      include: [
+        {
+          model: Tag,
+          through: TaskTag,
+          attributes: ['tag_name'],
+          as: 'task_by_taskTag'
+        },
+      ]
+    })
+    // Serialize data so the template can read it
+    const user = userData.get({ plain: true });
+    if (user && tasksData.length > 0) {
+      let tasks = tasksData.map((task) => task.get({ plain: true }));
+      tasks = tasks.map((task) => { Object.assign(task, { user: { username: user.username } }); return task; });
+      console.log("user", user);
+      console.log("tasks", tasks);
+      res.render('user', { tasks, user });
+    }
+    else if (user) {
+      res.render('user', { tasks: [], user });
+    }
+    else {
+      res.render('user', { tasks, user });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
