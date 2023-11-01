@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     const quote = response.data.content;
 
     if (req.session.logged_in) {
-      res.redirect('/profile');
+      res.redirect('/tasks');
     }
 
     res.render('landingPage', {
@@ -124,13 +124,61 @@ router.get('/tasks', async (req, res) => {
       },
     ]
   })
+
+  const tagsData = await Tag.findAll()
+  let tags = []
+  if (tagsData.length > 0) {
+   tags = tagsData.map((tag) => tag.get({ plain: true }));
+  }
   // Serialize data so the template can read it
   if (tasksData.length > 0) {
     const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks, logged_in: req.session.logged_in });
+    res.render('tasks', { tasks, tags, logged_in: req.session.logged_in });
   }
   else {
-    res.render('tasks', { tasks: [], logged_in: req.session.logged_in })
+    res.render('tasks', { tasks: [], tags, logged_in: req.session.logged_in })
+  }
+});
+
+// GET one tag and associated tasks
+router.get('/tags/:id', async (req, res) => {
+  const tasksData = await Tag.findByPk(req.params.id, {
+    include: [
+      {
+        model: Task,
+        through: TaskTag,
+        as: 'tag_by_taskTag',
+        include: [
+          {
+            model: User,
+            attributes: ['username']
+          },
+          {
+            model: Tag,
+            through: TaskTag,
+            attributes: ['tag_name'],
+            as: 'task_by_taskTag'
+          },
+        ]
+      },
+    ]
+  })
+
+  const allTasks = tasksData.get({ plain: true });
+  const tasks = allTasks.tag_by_taskTag
+  console.log(tasks);
+
+  const tagsData = await Tag.findAll()
+  let tags = []
+  if (tagsData.length > 0) {
+   tags = tagsData.map((tag) => tag.get({ plain: true }));
+  }
+  // Serialize data so the template can read it
+  if (tasks.length > 0) {
+    res.render('tasks', { tasks, tags, logged_in: req.session.logged_in });
+  }
+  else {
+    res.render('tasks', { tasks: [], tags, logged_in: req.session.logged_in })
   }
 });
 
