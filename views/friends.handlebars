@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-auto">
+    <h1>This is the friends</h1>
+    <h2>Welcome, {{this.name}}!</h2>
+  </div>
+<div id="friends-page-body">
+  {{#each friends}}
+  <section>
+    <h2>Profile:</h2>
+    <p>Username: {{friends.user_id}}</p>
+
+    {{#each friends.tasks}}
+    <div>
+      <p>Task Title: {{task.title}}</p>
+      <section class="post-sec">
+        {{> post}}
+        </section>
+    </div>
+    {{/each}}
+  </section>
+  {{/each}}
+</div>

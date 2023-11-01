@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Task, Tag, Comments, TaskTag } = require('../models');
+const { User, Task, Tag, Comments, TaskTag, Friends } = require('../models');
 const withAuth = require('../utils/auth');
 const getEmotion = require('../utils/emotion');
 const axios = require('axios');
@@ -284,6 +284,36 @@ router.get('/home', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
+  }
+});
+
+router.get('/friends/:id', withAuth, async (req, res) => {
+  try {
+    const friendsData = await Friends.findAll({
+      where: {
+        user_id: req.params.id
+      },
+      include: [
+        {
+          model: User,
+          foreignKey: 'friend_id',
+          attributes: { exclude: ['password'] },
+          include: [
+            {
+              model: Task,
+              required: false,
+              where: { public: true }
+            },
+          ]
+        },
+      ]
+    });
+    res
+      .status(200)
+      .render('friends', { friendsData, logged_in: req.session.logged_in });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
   }
 });
 
