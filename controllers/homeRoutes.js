@@ -17,6 +17,10 @@ router.get('/', async (req, res) => {
     const response = await axios.request(options);
     const quote = response.data.content;
 
+    if (req.session.logged_in) {
+      res.redirect('/profile');
+    }
+
     res.render('landingPage', {
       layout: 'landing.handlebars',
       quote: quote
@@ -26,20 +30,20 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
   // try {
-    // Get all projects and JOIN with user data
-    // const projectData = await Project.findAll({
-    //   include: [
-    //     {
-    //       model: User,
-    //       attributes: ['name'],
-    //     },
-    //   ],
-    // });
+  // Get all projects and JOIN with user data
+  // const projectData = await Project.findAll({
+  //   include: [
+  //     {
+  //       model: User,
+  //       attributes: ['name'],
+  //     },
+  //   ],
+  // });
 
-    // Serialize data so the template can read it
-    // const projects = projectData.map((project) => project.get({ plain: true }));
+  // Serialize data so the template can read it
+  // const projects = projectData.map((project) => project.get({ plain: true }));
 
-    // Pass serialized data and session flag into template
+  // Pass serialized data and session flag into template
   //   res.render('landingPage', {
   //     layout: 'landing.handlebars'
   //   });
@@ -85,7 +89,7 @@ router.get('/profile', withAuth, async (req, res) => {
     // const user = userData.get({ plain: true });
 
     res.render('profile', {
-      logged_in: true
+      logged_in: req.session.logged_in
     });
   } catch (err) {
     res.status(500).json(err);
@@ -99,7 +103,7 @@ router.get('/login', (req, res) => {
     return;
   }
 
-  res.render('login');
+  res.render('login', { logged_in: req.session.logged_in });
 });
 
 router.get('/tasks', async (req, res) => {
@@ -123,10 +127,10 @@ router.get('/tasks', async (req, res) => {
   // Serialize data so the template can read it
   if (tasksData.length > 0) {
     const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks });
+    res.render('tasks', { tasks, logged_in: req.session.logged_in });
   }
   else {
-    res.render('tasks', { tasks: [] })
+    res.render('tasks', { tasks: [], logged_in: req.session.logged_in })
   }
 });
 
@@ -158,7 +162,7 @@ router.get('/tasks/:id', async (req, res) => {
   })
   if (taskData) {
     const task = taskData.get({ plain: true });
-    res.render('task', { task })
+    res.render('task', { task, logged_in: req.session.logged_in })
   }
   else {
     res.redirect('/tasks');
