@@ -38,10 +38,30 @@ const delButtonHandler = async (event) => {
   }
 };
 
-document
-  .querySelector('.new-project-form')
-  .addEventListener('submit', newFormHandler);
+const getTasksByTag = async (event) => {
+  console.log('clicked');
+  if (event.target.hasAttribute('data-id')) {
+    const id = event.target.getAttribute('data-id');
 
-document
-  .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);
+    const response = await fetch(`/api/tags/${id}`, {
+      method: 'GET',
+    });
+
+    if (response.ok) {
+    } else {
+      alert('Failed to delete project');
+    }
+  }
+};
+
+// document
+//   .querySelector('.new-project-form')
+//   .addEventListener('submit', newFormHandler);
+
+// document
+//   .querySelector('.project-list')
+//   .addEventListener('click', delButtonHandler);
+
+  document
+  .querySelector('.tag-button')
+  .addEventListener('click', getTasksByTag);

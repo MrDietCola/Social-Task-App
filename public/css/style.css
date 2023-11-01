@@ -136,3 +136,15 @@ form {
 a {
   text-decoration: none;
 }
+
+.tag-button {
+  width: 100%;
+  padding: 10px;
+  background-color: grey;
+  border: none;
+  color: white;
+}
+
+.tag-button:hover {
+  opacity: 75%;
+}
