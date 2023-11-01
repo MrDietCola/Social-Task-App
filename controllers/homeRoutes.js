@@ -220,4 +220,22 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
+
+router.get('/home', async (req, res) => {
+  try {
+      const response = await axios.request(options);
+      const quote = response.data.content;
+
+      res.render('landingPage', {
+        layout: 'landing.handlebars',
+        quote: quote,
+        logged_in: req.session.logged_in, // Pass the logged_in flag to the template
+      });
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

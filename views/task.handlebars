@@ -10,6 +10,15 @@
         <p>
             {{task.date_created}}
         </p>
+        {{> post}}
+        <ul>
+            {{#each task.task_by_taskTag as |tag|}}
+            <li>
+                <a href="/tag/{{tag.id}}">{{tag.tag_name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </section>
     </section>
      <section class="post-sec">
             {{> post}}
