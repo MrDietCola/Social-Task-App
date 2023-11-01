@@ -13,9 +13,9 @@
         <div>
             <p>Emotion: {{emotion}}</p>
             <ul>
-                {{#each task.task_by_taskTag as |tag|}}
+                {{#each task.task_by_taskTag as |taskTag|}}
                 <li>
-                    <a href="/tag/{{tag.id}}">{{tag.tag_name}}</a>
+                    <a href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
                 </li>
                 {{/each}}
             </ul>

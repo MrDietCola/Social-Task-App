@@ -120,7 +120,7 @@ router.get('/tasks', async (req, res) => {
       {
         model: Tag,
         through: TaskTag,
-        attributes: ['tag_name'],
+        attributes: ['id', 'tag_name'],
         as: 'task_by_taskTag'
       },
     ]
@@ -129,7 +129,7 @@ router.get('/tasks', async (req, res) => {
   const tagsData = await Tag.findAll()
   let tags = []
   if (tagsData.length > 0) {
-   tags = tagsData.map((tag) => tag.get({ plain: true }));
+    tags = tagsData.map((tag) => tag.get({ plain: true }));
   }
   // Serialize data so the template can read it
   if (tasksData.length > 0) {
@@ -157,7 +157,7 @@ router.get('/tags/:id', async (req, res) => {
           {
             model: Tag,
             through: TaskTag,
-            attributes: ['tag_name'],
+            attributes: ['id', 'tag_name'],
             as: 'task_by_taskTag'
           },
         ]
@@ -167,12 +167,11 @@ router.get('/tags/:id', async (req, res) => {
 
   const allTasks = tasksData.get({ plain: true });
   const tasks = allTasks.tag_by_taskTag
-  console.log(tasks);
 
   const tagsData = await Tag.findAll()
   let tags = []
   if (tagsData.length > 0) {
-   tags = tagsData.map((tag) => tag.get({ plain: true }));
+    tags = tagsData.map((tag) => tag.get({ plain: true }));
   }
   // Serialize data so the template can read it
   if (tasks.length > 0) {
@@ -195,7 +194,7 @@ router.get('/tasks/:id', async (req, res) => {
       },
       {
         model: Tag,
-        attributes: ['tag_name'],
+        attributes: ['id', 'tag_name'],
         as: 'task_by_taskTag'
       },
       {
@@ -244,7 +243,7 @@ router.get('/user/:id', async (req, res) => {
         {
           model: Tag,
           through: TaskTag,
-          attributes: ['tag_name'],
+          attributes: ['id', 'tag_name'],
           as: 'task_by_taskTag'
         },
       ]
@@ -273,15 +272,15 @@ router.get('/user/:id', async (req, res) => {
 
 router.get('/home', async (req, res) => {
   try {
-      const response = await axios.request(options);
-      const quote = response.data.content;
+    const response = await axios.request(options);
+    const quote = response.data.content;
 
-      res.render('landingPage', {
-        layout: 'landing.handlebars',
-        quote: quote,
-        logged_in: req.session.logged_in, // Pass the logged_in flag to the template
-      });
-    
+    res.render('landingPage', {
+      layout: 'landing.handlebars',
+      quote: quote,
+      logged_in: req.session.logged_in, // Pass the logged_in flag to the template
+    });
+
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
