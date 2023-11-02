@@ -339,8 +339,7 @@ router.get('/friends/:id', withAuth, async (req, res) => {
       ]
     });
 
-    const friends =  friendsData.map(task => task.get({ plain: true }));
-    console.log(friends[0].user.tasks);
+    let friends =  friendsData.map(task => task.get({ plain: true }));
 
     res.render('friends', { friends, ...req.session });
 
