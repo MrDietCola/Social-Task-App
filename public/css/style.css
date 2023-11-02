@@ -28,15 +28,19 @@ header,
 
 /* <----- landing page ------> */
 
-body {
-  background-color: rgb(214, 15, 15);
+
+
+
+.landing-nav {
+  font-weight: bolder;
+  font-size: 35px;
+
 }
 
 .main {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  margin: 100px;
+  padding: 100px;
 
 }
 
@@ -51,7 +55,7 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-  width: 60%;
+  width: 70%;
   z-index: -1;
 }
 
@@ -67,7 +71,7 @@ img {
 }
 
 form {
-  background-color: #b1b2bd;
+  background-color: #ebf4f6;
   display: block;
   justify-items: center;
   padding: 50px;
@@ -75,9 +79,11 @@ form {
   width: 400px;
 }
 
-.logo-image {
+.logo-tittle {
   display: flex;
   justify-content: center;
+  font-weight: bolder;
+  font-size: 30px;
 }
 
 .mb-3 {
@@ -94,7 +100,7 @@ form {
   display: block;
   text-align: center;
   padding: 30px;
-  color: rgb(239, 239, 25);
+  color: #ff6347;
 }
 
 .sign-up {
@@ -146,11 +152,28 @@ a {
 .tag-button {
   width: 100%;
   padding: 10px;
-  background-color: grey;
+  background-color: #ff6347;
   border: none;
   color: white;
 }
 
 .tag-button:hover {
   opacity: 75%;
+}
+
+.user-card {
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: none;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.max-width {
+  max-width: 1000px;
+}
+
+.none {
+  text-decoration: none;
+  color: black;
 }

@@ -29,10 +29,10 @@ const seedDatabase = async () => {
     returning: true,
   })
 
-  // const friends = await Friends.bulkCreate(require('./friendsData.json'), {
-  //   individualHooks: true,
-  //   returning: true,
-  // })
+  const friends = await Friends.bulkCreate(require('./friendsData.json'), {
+    individualHooks: true,
+    returning: true,
+  })
 
   process.exit(0);
 };

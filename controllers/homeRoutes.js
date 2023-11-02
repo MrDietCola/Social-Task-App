@@ -56,28 +56,6 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/project/:id', async (req, res) => {
-  try {
-    const projectData = await Project.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
-    });
-
-    const project = projectData.get({ plain: true });
-
-    res.render('project', {
-      ...project,
-      logged_in: req.session.logged_in
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // Use withAuth middleware to prevent access to route
 router.get('/profile', withAuth, async (req, res) => {
   try {
@@ -180,6 +158,64 @@ router.get('/tags/:id', async (req, res) => {
   else {
     res.render('tasks', { tasks: [], tags, logged_in: req.session.logged_in })
   }
+});
+
+router.get('/search/:searchVal', async (req, res) => {
+  const tagData = await Tag.findAll()
+  const tagInfo = tagData.map(tag => tag.dataValues);
+  
+  let tags = tagInfo.filter(tag => {
+    const { tag_name } = tag;
+    const searchTerm = req.params.searchVal;
+    
+    return [ tag_name ].some(attribute =>
+      attribute.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+  
+  const taskData = await Task.findAll({
+    include: {
+      model: User,
+      attributes: ['username']
+    }
+  })
+  const taskInfo = taskData.map(task => task.dataValues);
+  console.log(taskInfo[0].user.dataValues.username);
+
+  let tasks = taskInfo.filter(task => {
+    const { title, description } = task;
+    const searchTerm = req.params.searchVal;
+    
+    return [ title, description ].some(attribute =>
+      attribute.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+  const userData = await User.findAll()
+  const usersInfo = userData.map(user => user.dataValues);
+  
+  let users = usersInfo.filter(user => {
+    const { first_name, last_name, username } = user;
+    const searchTerm = req.params.searchVal;
+    
+    return [first_name, last_name, username].some(attribute =>
+      attribute.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+  if (!(users.length > 0)) {
+    users = [];
+  }    
+  
+  if (!(tasks.length > 0)) {
+    tasks = [];
+  }
+
+  if (!(tags.length > 0)) {
+    tags = [];
+  }
+
+  res.render('results', { tasks, users, tags, logged_in: req.session.logged_in })
 });
 
 router.get('/tasks/:id', async (req, res) => {
@@ -291,6 +327,7 @@ router.get('/home', async (req, res) => {
 });
 
 
+
 router.get('/add-task', withAuth, (req, res) => {
   try {
     res.render('addTask', { logged_in: req.session.logged_in });
@@ -299,6 +336,7 @@ router.get('/add-task', withAuth, (req, res) => {
     res.status(500).json(err);
   }
 })
+
 
 router.get('/friends/:id', withAuth, async (req, res) => {
   try {
@@ -321,9 +359,11 @@ router.get('/friends/:id', withAuth, async (req, res) => {
         },
       ]
     });
-    res
-      .status(200)
-      .render('friends', { friendsData, logged_in: req.session.logged_in });
+
+    const friends = friendsData.get({ plain: true });
+
+    res.render('friends', { ...friends, logged_in: req.session.logged_in });
+
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
