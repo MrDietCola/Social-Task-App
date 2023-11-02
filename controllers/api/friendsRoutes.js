@@ -6,6 +6,26 @@ const { Friends, Task, Tag, TaskTag, User } = require('../../models');
 // CREATE one friend
 router.post('/', async (req, res) => {
   try {
+    const userFriendsData = await Friends.findAll({
+      where: {
+        user_id: 1
+      },
+      include: [
+        {
+          model: User,
+          foreignKey: 'friend_id',
+          attributes: { exclude: ['password'] },
+        },
+      ]
+    });
+    const friends =  userFriendsData.map(friend => friend.get({ plain: true }))
+    console.log(friends);
+    for (const friend of friends) {
+      if (friend.friend_id === req.body.friend_id && friend.user_id === req.body.user_id) {
+        res.status(200).json({ message: 'you are already friends!' });
+        return
+      } 
+    }
     const friendsData = await Friends.create(req.body);
     res.status(200).json(friendsData);
   } catch (err) {

@@ -3,24 +3,26 @@
 <div class="row d-flex justify-content-center">
     <aside id="tag-side" class="col-3 d-flex flex-column">
        {{#if tags}}
+
+    
+        {{#if tags}}
+
         {{#each tags as |tag|}}
         {{> tag-card}}
         {{/each}}
         {{else}}
         <h3>No tags yet...</h3>
-        {{/if}} 
+        {{/if}}
     </aside>
     <section id="tasks" class="col-8">
         <div class="task-div">
-        {{#if tasks}}
-        {{#each tasks as |task|}}
-        {{> task-card}}
-        {{/each}}
-        {{else}}
-        <h3>No posts yet... :( Visit <a href="/profile">your profile</a> to create a new one!</h3>
-        {{/if}}
+            {{#if tasks}}
+            {{#each tasks as |task|}}
+            {{> task-card}}
+            {{/each}}
+            {{else}}
+            <h3>No posts yet... :( Visit <a href="/profile">your profile</a> to create a new one!</h3>
+            {{/if}}
         </div>
     </section>
 </div>
-
-  <script src="./js/profile.js"></script>
