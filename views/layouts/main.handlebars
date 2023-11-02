@@ -34,8 +34,16 @@
             <a class="nav-link" aria-current="page" href="/tasks">My Tasks</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/add-task"><img id="plus"
-                src="/images/plus-circle-svgrepo-com.png" alt=""></a>
+            <div class="dropdown">
+              <button class="btn btn-primary-subtle dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img id="plus" src="/images/plus-circle-svgrepo-com.png" class="" alt="">
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/add-task">Create Task</a></li>
+                <li><a class="dropdown-item" href="/add-tag">Create Tag</a></li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
@@ -67,4 +75,5 @@
   <script src="/js/login.js"></script> --}}
   {{/if}}
 </body>
+
 </html>
