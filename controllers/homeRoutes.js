@@ -183,39 +183,44 @@ router.get('/tags/:id', async (req, res) => {
 });
 
 router.get('/tasks/:id', async (req, res) => {
-  const taskData = await Task.findByPk(req.params.id, {
-    where: {
-      public: true
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['username', 'email']
+  try {
+    const taskData = await Task.findByPk(req.params.id, {
+      where: {
+        public: true
       },
-      {
-        model: Tag,
-        attributes: ['id', 'tag_name'],
-        as: 'task_by_taskTag'
-      },
-      {
-        model: Comments,
-
-        include: [{
+      include: [
+        {
           model: User,
-          attributes: ['username'],
-          foreignKey: "author_id",
-        }]
-      }
-    ]
-  })
-  if (taskData) {
-    const task = taskData.get({ plain: true });
-    let emotion = await getEmotion(task.description);
-    res.render('task', { task, logged_in: req.session.logged_in, emotion })
+          attributes: ['username', 'email']
+        },
+        {
+          model: Tag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+        {
+          model: Comments,
+
+          include: [{
+            model: User,
+            attributes: ['username'],
+            foreignKey: "author_id",
+          }]
+        }
+      ]
+    })
+    if (taskData) {
+      const task = taskData.get({ plain: true });
+      let emotion = await getEmotion(task.description);
+      res.render('task', { task, logged_in: req.session.logged_in, emotion })
+    }
+    else {
+      res.redirect('/tasks');
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
-  else {
-    res.redirect('/tasks');
-  }
+
   // Serialize data so the template can read it
 });
 
@@ -253,8 +258,6 @@ router.get('/user/:id', async (req, res) => {
     if (user && tasksData.length > 0) {
       let tasks = tasksData.map((task) => task.get({ plain: true }));
       tasks = tasks.map((task) => { Object.assign(task, { user: { username: user.username } }); return task; });
-      console.log("user", user);
-      console.log("tasks", tasks);
       res.render('user', { tasks, user });
     }
     else if (user) {
@@ -287,6 +290,16 @@ router.get('/home', async (req, res) => {
   }
 });
 
+
+router.get('/add-task', withAuth, (req, res) => {
+  try {
+    res.render('addTask', { logged_in: req.session.logged_in });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+})
+
 router.get('/friends/:id', withAuth, async (req, res) => {
   try {
     const friendsData = await Friends.findAll({
@@ -318,5 +331,6 @@ res.json(friends);
     res.status(400).json(err);
   }
 });
+
 
 module.exports = router;

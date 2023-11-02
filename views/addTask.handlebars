@@ -1,0 +1,40 @@
+<div class="row mt-4">
+  <div class="col-md-6">
+
+    <form class="form new-task-form">
+      <h3>Create a New Project:</h3>
+      {{!-- task title --}}
+      <div>
+        <label for="task-title-input">Task Title:</label>
+        <input type="text" id="task-title-input" />
+      </div>
+      {{!-- task description/body --}}
+      <div>
+        <label for="task-body-input">Task Body:</label>
+        <textarea id="task-body-input" cols="30" rows="10"></textarea>
+      </div>
+      {{!-- task state --}}
+      {{!-- in progress, completed, hiatus, abandoned, planned --}}
+      <div>
+        <label for="task-state-input">Task Status:</label>
+        <select name="" id="task-state-input">
+          <option value="in progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="hiatus">Hiatus</option>
+          <option value="abandoned">Abandoned</option>
+          <option value="planned">Planned</option>
+        </select>
+      </div>
+      {{!-- public/private switch --}}
+      <div>
+        <label for="task-visibility-input">Make Public:</label>
+        <input type="checkbox" name="" id="task-visibility-input">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="./js/addTask.js"></script>
