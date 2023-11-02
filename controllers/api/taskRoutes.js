@@ -35,4 +35,11 @@ router.delete('/:id', withAuth, async (req, res) => {
   }
 });
 
+router.post('/tag/:id', async (req, res) => {
+  const taskTagData = await TaskTag.create({
+    ...req.body,
+    task_id: req.params.id
+  })
+});
+
 module.exports = router;

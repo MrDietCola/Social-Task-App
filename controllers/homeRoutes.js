@@ -32,21 +32,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, res) => {
-  try {
-    res.render('profile', {
-      ...req.session 
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/profile', { ...req.session });
+    res.redirect('/tasks', { ...req.session });
     return;
   }
 
@@ -310,7 +299,7 @@ router.get('/add-task', withAuth, (req, res) => {
 
 router.get('/add-tag', withAuth, (req, res) => {
   try {
-    res.render('addTag', { logged_in: req.session.logged_in });
+    res.render('addTag', { ...req.session });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -339,8 +328,7 @@ router.get('/friends/:id', withAuth, async (req, res) => {
       ]
     });
 
-    const friends =  friendsData.map(task => task.get({ plain: true }));
-    console.log(friends[0].user.tasks);
+    const friends = friendsData.map(task => task.get({ plain: true }));
 
     res.render('friends', { friends, ...req.session });
 
