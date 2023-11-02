@@ -1,4 +1,5 @@
-header, .project:not(:last-child) {
+header,
+.project:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
 
@@ -35,12 +36,14 @@ header, .project:not(:last-child) {
   font-size: 35px;
 
 }
+
 .main {
   display: flex;
   align-items: center;
   padding: 100px;
-  
+
 }
+
 .image-stack {
 
   justify-items: center;
@@ -49,23 +52,24 @@ header, .project:not(:last-child) {
 }
 
 .image-stack__item--bottom {
-  position: absolute ;
+  position: absolute;
   right: 0;
   top: 0;
-  width: 70%; 
+  width: 70%;
   z-index: -1;
 }
 
 .image-stack__item--top {
-  padding-top: 50px; 
+  padding-top: 50px;
   margin: 50px;
-  width: 60%; 
+  width: 60%;
 }
 
 img {
   width: 70%;
   display: block;
 }
+
 form {
   background-color: #ebf4f6;
   display: block;
@@ -74,6 +78,7 @@ form {
   border-radius: 10px;
   width: 400px;
 }
+
 .logo-tittle {
   display: flex;
   justify-content: center;
@@ -81,7 +86,7 @@ form {
   font-size: 30px;
 }
 
-.mb-3{
+.mb-3 {
   display: block;
   align-items: center;
   width: 400px;
@@ -91,14 +96,14 @@ form {
   width: 280px;
 }
 
-.sign-up-div{
+.sign-up-div {
   display: block;
   text-align: center;
   padding: 30px;
   color: #ff6347;
 }
 
-.sign-up{
+.sign-up {
   color: rgb(0, 0, 0);
   text-decoration: none;
   font-weight: bold;
@@ -128,6 +133,7 @@ form {
 
 #plus {
   height: 30px;
+  width: 30px;
 }
 
 .search-bar {

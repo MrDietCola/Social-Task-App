@@ -2,31 +2,30 @@
 <div id="task-page-body">
 
     <section class="auth-sec">
-        <section>
-            <h3>
-                {{task.title}}
-            </h3>
-            <a href="/user/{{task.author_id}}">
-                {{task.user.username}}
-            </a>
-            <p>
-                {{task.date_created}}
-            </p>
-            <ul>
-                {{#each task.task_by_taskTag as |tag|}}
-                <li>
-                    <p class="tags" href="/tag/{{tag.id}}">{{tag.tag_name}}</p>
-                </li>
-                {{/each}}
-            </ul>
-       
-                {{> post}}
-            
-        </section>
-        <aside>
-            <h2>Comments:</h2>
-            <button onclick="openModal()" class="comment-btn">View Comments</button>
-        </aside>
+        <h3>
+            {{task.title}}
+        </h3>
+        <a href="/user/{{task.author_id}}">
+            {{task.user.username}}
+        </a>
+        <p>
+            {{format_date task.date_created}}
+        </p>
+        <ul>
+            {{#each task.task_by_taskTag as |tag|}}
+            <li>
+                <p class="tags" href="/tag/{{tag.id}}">{{tag.tag_name}}</p>
+            </li>
+            {{/each}}
+        </ul>
+
+        {{> post}}
+
+    </section>
+    <aside>
+        <h2>Comments:</h2>
+        <button onclick="openModal()" class="comment-btn">View Comments</button>
+    </aside>
 </div>
 <script>
     function openModal() {

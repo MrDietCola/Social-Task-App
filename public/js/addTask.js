@@ -1,4 +1,4 @@
-const newFormHandler = async (event) => {
+const newTaskHandler = async (event) => {
   event.preventDefault();
 
   const title = document.getElementById('task-title-input').value.trim();
@@ -8,7 +8,7 @@ const newFormHandler = async (event) => {
 
   console.log(title, body, state, visibility);
   if (title && body && state) {
-    const response = await fetch(`/api/tasks`, {
+    const response = await fetch(`/api/tags`, {
       method: 'POST',
       body: JSON.stringify({
         title: title,
@@ -21,11 +21,11 @@ const newFormHandler = async (event) => {
       },
     });
     if (response.ok) {
-      document.location.replace('/profile');
+      document.location.replace('/tasks');
     } else {
-      alert('Failed to create project');
+      alert('Failed to create task');
     }
   }
 };
 
-document.querySelector('.new-task-form').addEventListener('submit', newFormHandler);
+document.querySelector('.new-task-form').addEventListener('submit', newTaskHandler);
