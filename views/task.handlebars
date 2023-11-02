@@ -23,6 +23,7 @@
     </section>
     <aside>
         <h2>Comments:</h2>
+        {{> commentForm}}
         {{#each task.comments as |comment|}}
         {{> comment}}
         {{/each}}
