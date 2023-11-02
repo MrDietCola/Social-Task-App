@@ -310,7 +310,7 @@ router.get('/add-task', withAuth, (req, res) => {
 
 router.get('/add-tag', withAuth, (req, res) => {
   try {
-    res.render('addTag', { logged_in: req.session.logged_in });
+    res.render('addTag', { ...req.session });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
