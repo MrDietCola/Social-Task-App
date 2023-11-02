@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Task } = require('../../models');
+const { Task, TaskTag } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -36,10 +36,16 @@ router.delete('/:id', withAuth, async (req, res) => {
 });
 
 router.post('/tag/:id', async (req, res) => {
-  const taskTagData = await TaskTag.create({
-    ...req.body,
-    task_id: req.params.id
-  })
+  try {
+    const taskTagData = await TaskTag.create({
+      ...req.body,
+      task_id: req.params.id
+    })
+    res.status(200).json(taskTagData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
 });
 
 module.exports = router;

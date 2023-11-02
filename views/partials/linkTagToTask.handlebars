@@ -1,3 +1,14 @@
+{{#if unlinkedTags}}
 <div>
-    link tag
+    <form action="" id="link-new-tag" data-task-id="{{task.id}}">
+        <label for="link-tag-select">Select Tag</label>
+        <select id="link-tag-select">
+            {{#each unlinkedTags as |unlinked-tag|}}
+            <option value="{{unlinked-tag.id}}">{{unlinked-tag.tag_name}}</option>
+            {{/each}}
+        </select>
+        <button>Add tag</button>
+    </form>
 </div>
+<script src="/js/linkTagToTask.js"></script>
+{{/if}}
