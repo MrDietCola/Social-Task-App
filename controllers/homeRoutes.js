@@ -265,7 +265,7 @@ router.get('/user/:id', async (req, res) => {
       tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
       res.render('user', { tasks, users, ...req.session });
     }
-    else if (user) {
+    else if (users) {
       res.render('user', { tasks: [], users, ...req.session });
     }
     else {
@@ -310,7 +310,7 @@ router.get('/add-task', withAuth, (req, res) => {
 
 router.get('/add-tag', withAuth, (req, res) => {
   try {
-    res.render('addTag', { logged_in: req.session.logged_in });
+    res.render('addTag', { ...req.session });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -339,8 +339,7 @@ router.get('/friends/:id', withAuth, async (req, res) => {
       ]
     });
 
-    const friends =  friendsData.map(task => task.get({ plain: true }));
-    console.log(friends[0].user.tasks);
+    let friends =  friendsData.map(task => task.get({ plain: true }));
 
     res.render('friends', { friends, ...req.session });
 
