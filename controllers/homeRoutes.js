@@ -291,7 +291,7 @@ router.get('/friends/:id', withAuth, async (req, res) => {
   try {
     const friendsData = await Friends.findAll({
       where: {
-        user_id: req.params.id
+        user_id: req.params.user_id
       },
       include: [
         {
@@ -308,9 +308,11 @@ router.get('/friends/:id', withAuth, async (req, res) => {
         },
       ]
     });
-    res
-      .status(200)
-      .render('friends', { friendsData, logged_in: req.session.logged_in });
+
+    const friends = friendsData.get({ plain: true });
+res.json(friends);
+    res.render('friends', { ...friends, logged_in: req.session.logged_in 
+    });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
