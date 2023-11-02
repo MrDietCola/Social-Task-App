@@ -98,7 +98,7 @@ router.get('/tasks', async (req, res) => {
       {
         model: Tag,
         through: TaskTag,
-        attributes: ['tag_name'],
+        attributes: ['id', 'tag_name'],
         as: 'task_by_taskTag'
       },
     ]
@@ -107,7 +107,7 @@ router.get('/tasks', async (req, res) => {
   const tagsData = await Tag.findAll()
   let tags = []
   if (tagsData.length > 0) {
-   tags = tagsData.map((tag) => tag.get({ plain: true }));
+    tags = tagsData.map((tag) => tag.get({ plain: true }));
   }
   // Serialize data so the template can read it
   if (tasksData.length > 0) {
@@ -135,7 +135,7 @@ router.get('/tags/:id', async (req, res) => {
           {
             model: Tag,
             through: TaskTag,
-            attributes: ['tag_name'],
+            attributes: ['id', 'tag_name'],
             as: 'task_by_taskTag'
           },
         ]
@@ -145,12 +145,11 @@ router.get('/tags/:id', async (req, res) => {
 
   const allTasks = tasksData.get({ plain: true });
   const tasks = allTasks.tag_by_taskTag
-  console.log(tasks);
 
   const tagsData = await Tag.findAll()
   let tags = []
   if (tagsData.length > 0) {
-   tags = tagsData.map((tag) => tag.get({ plain: true }));
+    tags = tagsData.map((tag) => tag.get({ plain: true }));
   }
   // Serialize data so the template can read it
   if (tasks.length > 0) {
@@ -220,39 +219,44 @@ router.get('/search/:searchVal', async (req, res) => {
 });
 
 router.get('/tasks/:id', async (req, res) => {
-  const taskData = await Task.findByPk(req.params.id, {
-    where: {
-      public: true
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['username', 'email']
+  try {
+    const taskData = await Task.findByPk(req.params.id, {
+      where: {
+        public: true
       },
-      {
-        model: Tag,
-        attributes: ['tag_name'],
-        as: 'task_by_taskTag'
-      },
-      {
-        model: Comments,
-
-        include: [{
+      include: [
+        {
           model: User,
-          attributes: ['username'],
-          foreignKey: "author_id",
-        }]
-      }
-    ]
-  })
-  if (taskData) {
-    const task = taskData.get({ plain: true });
-    let emotion = await getEmotion(task.description);
-    res.render('task', { task, logged_in: req.session.logged_in, emotion })
+          attributes: ['username', 'email']
+        },
+        {
+          model: Tag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+        {
+          model: Comments,
+
+          include: [{
+            model: User,
+            attributes: ['username'],
+            foreignKey: "author_id",
+          }]
+        }
+      ]
+    })
+    if (taskData) {
+      const task = taskData.get({ plain: true });
+      let emotion = await getEmotion(task.description);
+      res.render('task', { task, logged_in: req.session.logged_in, emotion })
+    }
+    else {
+      res.redirect('/tasks');
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
-  else {
-    res.redirect('/tasks');
-  }
+
   // Serialize data so the template can read it
 });
 
@@ -280,7 +284,7 @@ router.get('/user/:id', async (req, res) => {
         {
           model: Tag,
           through: TaskTag,
-          attributes: ['tag_name'],
+          attributes: ['id', 'tag_name'],
           as: 'task_by_taskTag'
         },
       ]
@@ -290,8 +294,6 @@ router.get('/user/:id', async (req, res) => {
     if (user && tasksData.length > 0) {
       let tasks = tasksData.map((task) => task.get({ plain: true }));
       tasks = tasks.map((task) => { Object.assign(task, { user: { username: user.username } }); return task; });
-      console.log("user", user);
-      console.log("tasks", tasks);
       res.render('user', { tasks, user });
     }
     else if (user) {
@@ -309,20 +311,32 @@ router.get('/user/:id', async (req, res) => {
 
 router.get('/home', async (req, res) => {
   try {
-      const response = await axios.request(options);
-      const quote = response.data.content;
+    const response = await axios.request(options);
+    const quote = response.data.content;
 
-      res.render('landingPage', {
-        layout: 'landing.handlebars',
-        quote: quote,
-        logged_in: req.session.logged_in, // Pass the logged_in flag to the template
-      });
-    
+    res.render('landingPage', {
+      layout: 'landing.handlebars',
+      quote: quote,
+      logged_in: req.session.logged_in, // Pass the logged_in flag to the template
+    });
+
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
   }
 });
+
+
+
+router.get('/add-task', withAuth, (req, res) => {
+  try {
+    res.render('addTask', { logged_in: req.session.logged_in });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+})
+
 
 router.get('/friends/:id', withAuth, async (req, res) => {
   try {
@@ -345,13 +359,16 @@ router.get('/friends/:id', withAuth, async (req, res) => {
         },
       ]
     });
-    res
-      .status(200)
-      .render('friends', { friendsData, logged_in: req.session.logged_in });
+
+    const friends = friendsData.get({ plain: true });
+
+    res.render('friends', { ...friends, logged_in: req.session.logged_in });
+
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
   }
 });
+
 
 module.exports = router;
