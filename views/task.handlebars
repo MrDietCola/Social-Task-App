@@ -1,31 +1,75 @@
+<link rel="stylesheet" href="/css/task.css">
 <div id="task-page-body">
-    <section>
-        <h3>
-            {{task.title}}
-        </h3>
-        <a href="/user/{{task.author_id}}">
-            {{task.user.username}}
-        </a>
-        <p>
-            {{task.date_created}}
-        </p>
-        {{> post}}
-        <div>
-            <p>Emotion: {{emotion}}</p>
+
+    <section class="auth-sec">
+        <section>
+            <h3>
+                {{task.title}}
+            </h3>
+            <a href="/user/{{task.author_id}}">
+                {{task.user.username}}
+            </a>
+            <p>
+                {{task.date_created}}
+            </p>
             <ul>
-                {{#each task.task_by_taskTag as |taskTag|}}
+                {{#each task.task_by_taskTag as |tag|}}
                 <li>
-                    <a href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
+                    <p class="tags" href="/tag/{{tag.id}}">{{tag.tag_name}}</p>
                 </li>
                 {{/each}}
             </ul>
-        </div>
-    </section>
-    <aside>
+            <section class="post-sec">
+                {{> post}}
+            </section>
+        </section>
+        <aside>
+            <h2>Comments:</h2>
+            <button onclick="openModal()" class="comment-btn">View Comments</button>
+        </aside>
+        <section>
+            <h3>
+                {{task.title}}
+            </h3>
+            <a href="/user/{{task.author_id}}">
+                {{task.user.username}}
+            </a>
+            <p>
+                {{task.date_created}}
+            </p>
+            {{> post}}
+            <div>
+                <p>Emotion: {{emotion}}</p>
+                <ul>
+                    {{#each task.task_by_taskTag as |taskTag|}}
+                    <li>
+                        <a href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </section>
+</div>
+<script>
+    function openModal() {
+        const modal = document.getElementById('commentModal');
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('commentModal');
+        modal.style.display = 'none';
+    }
+</script>
+{{!--
+<script src="/public/js/taskModal.js"></script> --}}
+<div id="commentModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
         <h2>Comments:</h2>
         {{> commentForm}}
         {{#each task.comments as |comment|}}
         {{> comment}}
         {{/each}}
-    </aside>
+    </div>
 </div>
