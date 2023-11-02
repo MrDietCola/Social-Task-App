@@ -8,7 +8,7 @@ const newTaskHandler = async (event) => {
 
   console.log(title, body, state, visibility);
   if (title && body && state) {
-    const response = await fetch(`/api/tags`, {
+    const response = await fetch(`/api/tasks`, {
       method: 'POST',
       body: JSON.stringify({
         title: title,
