@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="/css/task.css">
 <div id="task-page-body">
 
-    <section class="auth-sec">
-        <section>
+    {{!-- <section> --}}
+        <section class="auth-sec">
             <h3>
                 {{task.title}}
             </h3>
@@ -10,7 +10,7 @@
                 {{task.user.username}}
             </a>
             <p>
-                {{task.date_created}}
+                {{format_date task.date_created}}
             </p>
             <ul>
                 {{#each task.task_by_taskTag as |tag|}}
@@ -36,7 +36,7 @@
                 {{task.user.username}}
             </a>
             <p>
-                {{task.date_created}}
+                {{format_date task.date_created}}
             </p>
             {{> post}}
             <div>

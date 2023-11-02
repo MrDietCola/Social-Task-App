@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   try {
     const userData = await Tag.findAll({
       include: [
-        { model: Task, through: TaskTag, as: 'tag_by_taskTag'},
+        { model: Task, through: TaskTag, as: 'tag_by_taskTag' },
       ]
     });
     res.status(200).json(userData);
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
   try {
     const data = await Tag.findByPk(req.params.id, {
       include: [
-        { model: Task, through: TaskTag, as: 'tag_by_taskTag'},
+        { model: Task, through: TaskTag, as: 'tag_by_taskTag' },
       ]
     });
     const tagsData = data.get({ plain: true });
@@ -42,6 +42,7 @@ router.post('/', withAuth, async (req, res) => {
 
     res.status(200).json(newTag);
   } catch (err) {
+    console.error(err);
     res.status(400).json(err);
   }
 });

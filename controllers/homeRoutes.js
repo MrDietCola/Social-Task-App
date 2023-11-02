@@ -163,16 +163,16 @@ router.get('/tags/:id', async (req, res) => {
 router.get('/search/:searchVal', async (req, res) => {
   const tagData = await Tag.findAll()
   const tagInfo = tagData.map(tag => tag.dataValues);
-  
+
   let tags = tagInfo.filter(tag => {
     const { tag_name } = tag;
     const searchTerm = req.params.searchVal;
-    
-    return [ tag_name ].some(attribute =>
+
+    return [tag_name].some(attribute =>
       attribute.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
-  
+    );
+  });
+
   const taskData = await Task.findAll({
     include: {
       model: User,
@@ -185,28 +185,28 @@ router.get('/search/:searchVal', async (req, res) => {
   let tasks = taskInfo.filter(task => {
     const { title, description } = task;
     const searchTerm = req.params.searchVal;
-    
-    return [ title, description ].some(attribute =>
+
+    return [title, description].some(attribute =>
       attribute.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
+    );
+  });
 
   const userData = await User.findAll()
   const usersInfo = userData.map(user => user.dataValues);
-  
+
   let users = usersInfo.filter(user => {
     const { first_name, last_name, username } = user;
     const searchTerm = req.params.searchVal;
-    
+
     return [first_name, last_name, username].some(attribute =>
       attribute.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
+    );
+  });
 
   if (!(users.length > 0)) {
     users = [];
-  }    
-  
+  }
+
   if (!(tasks.length > 0)) {
     tasks = [];
   }
@@ -326,8 +326,6 @@ router.get('/home', async (req, res) => {
   }
 });
 
-
-
 router.get('/add-task', withAuth, (req, res) => {
   try {
     res.render('addTask', { logged_in: req.session.logged_in });
@@ -337,6 +335,14 @@ router.get('/add-task', withAuth, (req, res) => {
   }
 })
 
+router.get('/add-tag', withAuth, (req, res) => {
+  try {
+    res.render('addTag', { logged_in: req.session.logged_in });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+})
 
 router.get('/friends/:id', withAuth, async (req, res) => {
   try {
