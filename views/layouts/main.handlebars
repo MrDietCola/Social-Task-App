@@ -28,6 +28,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/tasks">Home</a>
           </li>
+          {{#if logged_in}}
           <li class="nav-item">
             <a class="nav-link" href="/friends/{{user.id}}" aria-current="page">Friends</a>
           </li>
@@ -38,6 +39,7 @@
             <a class="nav-link" aria-current="page" href="/add-task"><img id="plus"
                 src="/images/plus-circle-svgrepo-com.png" alt=""></a>
           </li>
+          {{/if}}
         </ul>
       </div>
       <form class="d-flex search-bar" role="search">
