@@ -14,7 +14,7 @@
         <ul>
             {{#each task.task_by_taskTag as |tag|}}
             <li>
-                <p class="tags" href="/tag/{{tag.id}}">{{tag.tag_name}}</p>
+                <a href="/tags/{{tag.id}}" class="none"><p class="tags">{{tag.tag_name}}</p></a>
             </li>
             {{/each}}
         </ul>
