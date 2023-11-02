@@ -265,7 +265,7 @@ router.get('/user/:id', async (req, res) => {
       tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
       res.render('user', { tasks, users, ...req.session });
     }
-    else if (user) {
+    else if (users) {
       res.render('user', { tasks: [], users, ...req.session });
     }
     else {
