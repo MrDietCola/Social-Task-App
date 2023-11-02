@@ -1,7 +1,7 @@
 <section>
     <h2>Profile:</h2>
-    <p>Name: {{user.first_name}} {{user.last_name}}, Username: {{user.username}}</p>
-    <a href="mailto: user.email">Contact via email</a>
+    <p>Name: {{users.first_name}} {{users.last_name}}, Username: {{users.username}}</p>
+    <a href="mailto: {{users.email}}">Contact via email</a>
 </section>
 <section>
     {{#if tasks}}
