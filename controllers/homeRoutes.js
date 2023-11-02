@@ -32,21 +32,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, res) => {
-  try {
-    res.render('profile', {
-      ...req.session 
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/profile', { ...req.session });
+    res.redirect('/tasks', { ...req.session });
     return;
   }
 
