@@ -2,20 +2,22 @@
     <h1>This are the friends</h1>
     <h2>Welcome, {{this.name}}!</h2>
 <div id="friends-page-body">
-  {{#each friends}}
+  {{#each friends as |friend|}}
   <section>
     <h2>Profile:</h2>
-    <p>Username: {{friends.user_id}}</p>
+    <p>Username: {{friend.user.username}}</p>
 
-    {{#each friends.tasks}}
+    {{#each friend.user.tasks as |task|}}
     <div>
       <p>Task Title: {{task.title}}</p>
       <section class="post-sec">
-        {{> post}}
-        </section>
+        {{> test}}
+      </section>
     </div>
     {{/each}}
   </section>
   {{/each}}
+
+
 </div>
 </div>

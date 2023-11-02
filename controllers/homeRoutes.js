@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     const quote = response.data.content;
 
     if (req.session.logged_in) {
-      res.redirect('/tasks');
+      res.redirect('/tasks', { ...req.session });
     }
 
     res.render('landingPage', {
@@ -30,45 +30,13 @@ router.get('/', async (req, res) => {
     console.error(err);
     res.status(500).json(err);
   }
-  // try {
-  // Get all projects and JOIN with user data
-  // const projectData = await Project.findAll({
-  //   include: [
-  //     {
-  //       model: User,
-  //       attributes: ['name'],
-  //     },
-  //   ],
-  // });
-
-  // Serialize data so the template can read it
-  // const projects = projectData.map((project) => project.get({ plain: true }));
-
-  // Pass serialized data and session flag into template
-  //   res.render('landingPage', {
-  //     layout: 'landing.handlebars'
-  //   });
-  // } catch (err) {
-  //   console.error(err);
-  //   res.status(500).json(err);
-  // }
-
-
 });
 
 // Use withAuth middleware to prevent access to route
 router.get('/profile', withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    // const userData = await User.findByPk(req.session.user_id, {
-    //   attributes: { exclude: ['password'] },
-    //   include: [{ model: Project }],
-    // });
-
-    // const user = userData.get({ plain: true });
-
     res.render('profile', {
-      logged_in: req.session.logged_in
+      ...req.session 
     });
   } catch (err) {
     res.status(500).json(err);
@@ -78,7 +46,7 @@ router.get('/profile', withAuth, async (req, res) => {
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/profile');
+    res.redirect('/profile', { ...req.session });
     return;
   }
 
@@ -112,10 +80,10 @@ router.get('/tasks', async (req, res) => {
   // Serialize data so the template can read it
   if (tasksData.length > 0) {
     const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks, tags, logged_in: req.session.logged_in });
+    res.render('tasks', { tasks, tags, ...req.session });
   }
   else {
-    res.render('tasks', { tasks: [], tags, logged_in: req.session.logged_in })
+    res.render('tasks', { tasks: [], tags, ...req.session })
   }
 });
 
@@ -153,10 +121,10 @@ router.get('/tags/:id', async (req, res) => {
   }
   // Serialize data so the template can read it
   if (tasks.length > 0) {
-    res.render('tasks', { tasks, tags, logged_in: req.session.logged_in });
+    res.render('tasks', { tasks, tags, ...req.session });
   }
   else {
-    res.render('tasks', { tasks: [], tags, logged_in: req.session.logged_in })
+    res.render('tasks', { tasks: [], tags, ...req.session })
   }
 });
 
@@ -215,7 +183,7 @@ router.get('/search/:searchVal', async (req, res) => {
     tags = [];
   }
 
-  res.render('results', { tasks, users, tags, logged_in: req.session.logged_in })
+  res.render('results', { tasks, users, tags, ...req.session })
 });
 
 router.get('/tasks/:id', async (req, res) => {
@@ -248,10 +216,10 @@ router.get('/tasks/:id', async (req, res) => {
     if (taskData) {
       const task = taskData.get({ plain: true });
       let emotion = await getEmotion(task.description);
-      res.render('task', { task, logged_in: req.session.logged_in, emotion })
+      res.render('task', { task, ...req.session, emotion })
     }
     else {
-      res.redirect('/tasks');
+      res.redirect('/tasks', { ...req.session });
     }
   } catch (err) {
     res.status(500).json(err);
@@ -290,17 +258,18 @@ router.get('/user/:id', async (req, res) => {
       ]
     })
     // Serialize data so the template can read it
-    const user = userData.get({ plain: true });
-    if (user && tasksData.length > 0) {
-      let tasks = tasksData.map((task) => task.get({ plain: true }));
-      tasks = tasks.map((task) => { Object.assign(task, { user: { username: user.username } }); return task; });
-      res.render('user', { tasks, user });
+    let tasks;
+    const users = userData.get({ plain: true });
+    if (users && tasksData.length > 0) {
+      tasks = tasksData.map((task) => task.get({ plain: true }));
+      tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
+      res.render('user', { tasks, users, ...req.session });
     }
     else if (user) {
-      res.render('user', { tasks: [], user });
+      res.render('user', { tasks: [], users, ...req.session });
     }
     else {
-      res.render('user', { tasks, user });
+      res.render('user', { tasks, users, ...req.session });
     }
   } catch (err) {
     console.error(err);
@@ -314,10 +283,14 @@ router.get('/home', async (req, res) => {
     const response = await axios.request(options);
     const quote = response.data.content;
 
+    if (req.session.logged_in) {
+      res.redirect('/tasks');
+    }
+
     res.render('landingPage', {
       layout: 'landing.handlebars',
       quote: quote,
-      logged_in: req.session.logged_in, // Pass the logged_in flag to the template
+      ...req.session, // Pass the logged_in flag to the template
     });
 
   } catch (err) {
@@ -330,7 +303,7 @@ router.get('/home', async (req, res) => {
 
 router.get('/add-task', withAuth, (req, res) => {
   try {
-    res.render('addTask', { logged_in: req.session.logged_in });
+    res.render('addTask', { ...req.session });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -360,9 +333,10 @@ router.get('/friends/:id', withAuth, async (req, res) => {
       ]
     });
 
-    const friends = friendsData.get({ plain: true });
+    const friends =  friendsData.map(task => task.get({ plain: true }));
+    console.log(friends[0].user.tasks);
 
-    res.render('friends', { ...friends, logged_in: req.session.logged_in });
+    res.render('friends', { friends, ...req.session });
 
   } catch (err) {
     console.log(err);
