@@ -1,0 +1,30 @@
+.row{
+    padding-top: 30px;
+}
+.col-3{
+    border-radius: 10px;
+}
+.task-div{
+text-decoration: none;
+background-color: #ebf4f6;
+padding: 30px;
+list-style: none;
+border-radius: 10px;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  a {
+    color: #ff6347;
+    text-decoration: none;
+    display: flex; 
+    text-align: center;
+    list-style: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
