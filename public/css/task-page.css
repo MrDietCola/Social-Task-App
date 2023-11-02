@@ -28,3 +28,9 @@ h3 {
   a:hover {
     text-decoration: underline;
   }
+  
+  #tag-side a {
+    color:#ebf4f6;
+    display: flex;
+    flex-direction: column;
+  }
