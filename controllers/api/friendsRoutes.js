@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { Friends, Task, User } = require('../../models');
+
+const { Friends, Task, Tag, TaskTag, User } = require('../../models');
+
 
 // CREATE one friend
 router.post('/', async (req, res) => {
@@ -30,48 +32,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Render friend tasks
-router.get('/friends', async (req, res) => {
-  try {
-    const friend = await Friends.findAll(req.params.id, {
-      include: {
-        model: User,
-        include: Task,
-        foreignKey: friend_id,
-      },
-    });
-    res.render('friendTasks', { friend });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-});
-
-
-
-
 module.exports = router;
-
-
-
-router.get('/project/:id', async (req, res) => {
-  try {
-    const projectData = await Project.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
-    });
-
-    const project = projectData.get({ plain: true });
-
-    res.render('project', {
-      ...project,
-      logged_in: req.session.logged_in
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
