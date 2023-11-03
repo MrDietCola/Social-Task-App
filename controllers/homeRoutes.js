@@ -3,6 +3,7 @@ const { User, Task, Tag, Comments, TaskTag, Friends } = require('../models');
 const withAuth = require('../utils/auth');
 const getEmotion = require('../utils/emotion');
 const axios = require('axios');
+const { Op } = require('sequelize');
 
 const options = {
   method: 'GET',
@@ -31,7 +32,6 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
@@ -203,15 +203,32 @@ router.get('/tasks/:id', async (req, res) => {
         }
       ]
     })
-    if (taskData) {
-      const task = taskData.get({ plain: true });
-      let emotion = await getEmotion(task.description);
-      res.render('task', { task, ...req.session, emotion })
-    }
-    else {
+
+    if (!taskData) {
       res.redirect('/tasks', { ...req.session });
+      return;
     }
+    const task = taskData.get({ plain: true });
+
+    const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
+    const unlinkedTagsData = await Tag.findAll({
+      where: {
+        id: {
+          [Op.notIn]: linkedTagIDs
+        }
+      }
+    });
+    unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
+
+    let emotion = await getEmotion(task.description);
+
+    if (!req.session.logged_in || task.author_id != req.session.user.id) {
+      unlinkedTags = [];
+    }
+
+    res.render('task', { task, ...req.session, emotion, unlinkedTags })
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 
@@ -329,7 +346,7 @@ router.get('/friends/:id', withAuth, async (req, res) => {
       ]
     });
 
-    let friends =  friendsData.map(task => task.get({ plain: true }));
+    const friends = friendsData.map(task => task.get({ plain: true }));
 
     res.render('friends', { friends, ...req.session });
 

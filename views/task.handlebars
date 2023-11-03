@@ -14,13 +14,15 @@
         <ul>
             {{#each task.task_by_taskTag as |tag|}}
             <li>
-                <a href="/tags/{{tag.id}}" class="none"><p class="tags">{{tag.tag_name}}</p></a>
+                <a href="/tags/{{tag.id}}" class="none">
+                    <p class="tags">{{tag.tag_name}}</p>
+                </a>
             </li>
             {{/each}}
+            {{> linkTagToTask}}
         </ul>
 
         {{> post}}
-
     </section>
     <aside>
         <h2>Comments:</h2>
