@@ -1,6 +1,7 @@
 #task-page-body {
     display: flex;
     padding: 30px;
+    flex-direction: column;
 }
 
 #auth-sec {
@@ -17,10 +18,12 @@ h3{
     text-decoration: none;
 }
 
-a{
+a,
+h4 {
     color: #ff6347;
     text-decoration: none;
 }
+
 ul {
     list-style-type: none;
 
@@ -63,7 +66,9 @@ h2 {
     padding: 20px;
     border: 1px solid #ff6347;
     border-radius: 10px;
-    width: 80%;
+    width: 70%;
+    display: flex;
+    position: relative;
 }
 .modal-content h2 {
     color: #ff6347;
@@ -86,8 +91,12 @@ h2 {
 .close-btn {
     color: #888;
     float: right;
-    font-size: 28px;
+    font-size: 40px;
     font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 25px 0 0;
 }
 
 .close-btn:hover,
@@ -98,11 +107,31 @@ h2 {
 }
 
 #comment-form-container{
-    display: block;
+    min-width: 50%;
 }
-#comment-form-container button {
 
+#comment-form-container button {
     background-color: #ff6347;
     border: 0;
     border-radius: 10px;
+    width: fit-content;
+    padding: 10px;
+    margin-top: 8px;
+    color: white;
+}
+
+#comment-form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px!important;
+    width: 100%;
+    align-items: start;
+}
+
+#comment-form textarea {
+    height: 150px;
+}
+
+#comment-form label {
+    color: #ff6347;
 }
