@@ -1,10 +1,18 @@
 <link rel="stylesheet" href="/css/task.css">
+<link rel="stylesheet" href="/css/task-page.css">
+
 <div id="task-page-body">
-
-
-    <section class="auth-sec" id="auth-sec">
-        <h3>
-            {{task.title}} 
+    <section class="task-card">
+        <div class="task-card-header bg-light d-flex justify-content-between">
+            <h4>{{task.title}}</h4>
+            <div class="task-info d-flex justify-content-between">
+                <a href="/user/{{task.author_id}}">{{task.user.username}}</a>
+                <p>{{format_date task.date_created}}</p>
+            </div>
+            <div class="state {{task.state}}">
+                {{task.state}}
+            </div>
+        </div>
 
         <div class="task-card-body">
             <p>{{task.description}}</p>
@@ -13,24 +21,11 @@
                 <a class="button-4" href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
             {{/each}}
             </div>
-            <a href="/edit-task/{{task.id}}" id="edit-btn">Edit Task</a>
-            <ul>
-                {{#each task.task_by_taskTag as |tag|}}
-                <li>
-                    <a href="/tags/{{tag.id}}" class="none">
-                        <p class="tags">{{tag.tag_name}}</p>
-                    </a>
-                </li>
-                {{/each}}
-                {{> linkTagToTask}}
-            </ul>
         </div>
     </section>
-
-    <section class="auth-sec" id="auth-sec">
-       <h3>
+    {{!-- <section class="auth-sec" id="auth-sec"> --}}
+        {{!-- <h3>
             {{task.title}}
-
         </h3>
         <a href="/user/{{task.author_id}}">
             {{task.user.username}}
@@ -38,11 +33,21 @@
         <p>
             {{format_date task.date_created}}
         </p>
+        <ul>
+            {{#each task.task_by_taskTag as |tag|}}
+            <li>
+                <a href="/tags/{{tag.id}}" class="none">
+                    <p class="tags">{{tag.tag_name}}</p>
+                </a>
+            </li>
+            {{/each}}
+            {{> linkTagToTask}}
+        </ul>
 
-        {{> post}}
-    </section>
+        {{> post}} --}}
+    {{!-- </section> --}}
     <aside>
-        <h2>Comments:</h2>
+        {{!-- <h2>Comments:</h2> --}}
         <button onclick="openModal()" class="comment-btn">View Comments</button>
     </aside>
 </div>
@@ -62,9 +67,13 @@
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
         <h2>Comments:</h2>
-        {{> commentForm}}
-        {{#each task.comments as |comment|}}
-        {{> comment}}
-        {{/each}}
+        <div class="d-flex">
+            <div>
+                {{#each task.comments as |comment|}}
+                {{> comment}}
+                {{/each}}
+            </div>
+            {{> commentForm}}
+        </div>
     </div>
 </div>
