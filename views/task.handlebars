@@ -16,44 +16,25 @@
 
         <div class="task-card-body">
             <p>{{task.description}}</p>
-            <div class="d-flex">
-            {{#each task.task_by_taskTag as |taskTag|}}
-                <a class="button-4" href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
-            {{/each}}
-            </div>
-        </div>
-    </section>
-    {{!-- <section class="auth-sec" id="auth-sec"> --}}
-        {{!-- <h3>
-            {{task.title}}
-        </h3>
-        <a href="/user/{{task.author_id}}">
-            {{task.user.username}}
-        </a>
-        <p>
-            {{format_date task.date_created}}
-        </p>
-        <div class="border border-1 p-2">
             <ul class="d-flex flex-row" id="tag-list" data-task="{{task.id}}">
                 {{#each task.task_by_taskTag as |tag|}}
-                <li class="d-flex justify-content-between border p-2 m-1 align-content-center">
-                    <a href="/tags/{{tag.id}}" class="">
+                <li class="d-flex justify-content-between p-2 m-1 align-content-center">
+                    <a href="/tags/{{tag.id}}" class="button-4">
                         <p class="tags mb-0 align-center">{{tag.tag_name}}</p>
                     </a>
                     {{#if ../owner}}
-                    <button class="btn" data-tag="{{tag.id}}">Remove</button>
+                    <button class="btn button-4" data-tag="{{tag.id}}">Remove</button>
                     {{/if}}
                 </li>
                 {{/each}}
             </ul>
             {{> linkTagToTask}}
         </div>
-        {{> post}}
-    </section>
-    <aside>
-        {{!-- <h2>Comments:</h2> --}}
-        <button onclick="openModal()" class="comment-btn">View Comments</button>
-    </aside>
+        <aside>
+            <h2>Comments:</h2>
+            <button onclick="openModal()" class="comment-btn">View Comments</button>
+        </aside>
+
 </div>
 <script>
     function openModal() {
