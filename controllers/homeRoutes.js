@@ -20,7 +20,8 @@ router.get('/', async (req, res) => {
     const quote = response.data.content;
 
     if (req.session.logged_in) {
-      res.redirect('/tasks', { ...req.session });
+      res.redirect('/tasks');
+      return;
     }
 
     res.render('landingPage', {
@@ -36,44 +37,48 @@ router.get('/', async (req, res) => {
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/tasks', { ...req.session });
+    res.redirect('/tasks');
     return;
   }
 
-  res.render('login', { logged_in: req.session.logged_in });
+  res.render('login', { ...req.session });
 });
 
 router.get('/tasks', async (req, res) => {
-  const tasksData = await Task.findAll({
-    where: {
-      public: true
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['username']
+  try {
+    const tasksData = await Task.findAll({
+      where: {
+        public: true
       },
-      {
-        model: Tag,
-        through: TaskTag,
-        attributes: ['id', 'tag_name'],
-        as: 'task_by_taskTag'
-      },
-    ]
-  })
+      include: [
+        {
+          model: User,
+          attributes: ['username']
+        },
+        {
+          model: Tag,
+          through: TaskTag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+      ]
+    })
 
-  const tagsData = await Tag.findAll()
-  let tags = []
-  if (tagsData.length > 0) {
-    tags = tagsData.map((tag) => tag.get({ plain: true }));
-  }
-  // Serialize data so the template can read it
-  if (tasksData.length > 0) {
-    const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks, tags, ...req.session });
-  }
-  else {
-    res.render('tasks', { tasks: [], tags, ...req.session })
+    const tagsData = await Tag.findAll()
+    let tags = []
+    if (tagsData.length > 0) {
+      tags = tagsData.map((tag) => tag.get({ plain: true }));
+    }
+    // Serialize data so the template can read it
+    if (tasksData.length > 0) {
+      const tasks = tasksData.map((task) => task.get({ plain: true }));
+      res.render('tasks', { tasks, tags, ...req.session });
+    }
+    else {
+      res.render('tasks', { tasks: [], tags, ...req.session })
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
@@ -205,7 +210,7 @@ router.get('/tasks/:id', async (req, res) => {
     })
 
     if (!taskData) {
-      res.redirect('/tasks', { ...req.session });
+      res.redirect('/tasks');
       return;
     }
     const task = taskData.get({ plain: true });
@@ -292,6 +297,7 @@ router.get('/home', async (req, res) => {
 
     if (req.session.logged_in) {
       res.redirect('/tasks');
+      return;
     }
 
     res.render('landingPage', {
