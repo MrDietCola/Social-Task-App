@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
     if (req.session.logged_in) {
       res.redirect(302, '/tasks');
-      return 
+      return
     }
 
     res.render('landingPage', {
@@ -45,43 +45,43 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/tasks', async (req, res) => {
- try { 
-  const tasksData = await Task.findAll({
-    where: {
-      public: true
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['username']
+  try {
+    const tasksData = await Task.findAll({
+      where: {
+        public: true
       },
-      {
-        model: Tag,
-        through: TaskTag,
-        attributes: ['id', 'tag_name'],
-        as: 'task_by_taskTag'
-      },
-    ]
-  })
+      include: [
+        {
+          model: User,
+          attributes: ['username']
+        },
+        {
+          model: Tag,
+          through: TaskTag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+      ]
+    })
 
-  const tagsData = await Tag.findAll()
-  let tags = []
-  if (tagsData.length > 0) {
-    tags = tagsData.map((tag) => tag.get({ plain: true }));
+    const tagsData = await Tag.findAll()
+    let tags = []
+    if (tagsData.length > 0) {
+      tags = tagsData.map((tag) => tag.get({ plain: true }));
+    }
+    // Serialize data so the template can read it
+    // console.log(req.session);
+    if (tasksData.length > 0) {
+      const tasks = tasksData.map((task) => task.get({ plain: true }));
+      res.render('tasks', { tasks, tags, ...req.session });
+    }
+    else {
+      res.render('tasks', { tasks: [], tags, ...req.session })
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
   }
-  // Serialize data so the template can read it
-  // console.log(req.session);
-  if (tasksData.length > 0) {
-    const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks, tags, ...req.session });
-  }
-  else {
-    res.render('tasks', { tasks: [], tags, ...req.session })
-  }
-} catch (err) {
-  console.error(err);
-  res.status(500).json(err);
-}
 });
 
 router.get('/tags/:id', async (req, res) => {
@@ -91,6 +91,9 @@ router.get('/tags/:id', async (req, res) => {
         model: Task,
         through: TaskTag,
         as: 'tag_by_taskTag',
+        where: {
+          public: true
+        },
         include: [
           {
             model: User,
@@ -107,8 +110,12 @@ router.get('/tags/:id', async (req, res) => {
     ]
   })
 
-  const allTasks = tasksData.get({ plain: true });
-  const tasks = allTasks.tag_by_taskTag
+
+  let tasks = [];
+  if (tasksData) {
+    const allTasks = tasksData.get({ plain: true });
+    tasks = allTasks.tag_by_taskTag
+  }
 
   const tagsData = await Tag.findAll()
   let tags = []
@@ -227,12 +234,13 @@ router.get('/tasks/:id', async (req, res) => {
     let unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
     let emotion = await getEmotion(task.description);
-
+    let owner = true;
     if (!req.session.logged_in || task.author_id != req.session.user.id) {
       unlinkedTags = [];
+      owner = false;
     }
 
-    res.render('task', { task, ...req.session, emotion, unlinkedTags })
+    res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -273,14 +281,14 @@ router.get('/user/:id', async (req, res) => {
 
     let friends = [];
     if (req.session.logged_in) {
-       friends = await Friends.findAll({
+      friends = await Friends.findAll({
         where: {
-          user_id: req.session.user.id, 
+          user_id: req.session.user.id,
           friend_id: req.params.id
-        }, 
+        },
       })
     }
-    
+
     console.log(friends);
     // Serialize data so the template can read it
     let tasks;
@@ -288,7 +296,7 @@ router.get('/user/:id', async (req, res) => {
     if (users && tasksData.length > 0) {
       tasks = tasksData.map((task) => task.get({ plain: true }));
       tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
-      res.render('user', { tasks, users, ...req.session, friends});
+      res.render('user', { tasks, users, ...req.session, friends });
     }
     else if (users) {
       res.render('user', { tasks: [], users, ...req.session, friends });

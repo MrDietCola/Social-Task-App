@@ -48,4 +48,19 @@ router.post('/tag/:id', async (req, res) => {
 
 });
 
+router.delete('/tag/:id', async (req, res) => {
+  try {
+    const taskTagData = await TaskTag.destroy({
+      where: {
+        task_id: req.params.id,
+        tag_id: req.body.tag_id
+      }
+    })
+    res.status(200).json(taskTagData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+});
+
 module.exports = router;
