@@ -1,62 +1,251 @@
 [
-    {
-        "title": "test title no 1",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": true,
-        "author_id": 1
-    },
-    {
-        "title": "test title no 2",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": true,
-        "author_id": 2
-    },
-    {
-        "title": "test title no 3",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": true,
-        "author_id": 3
-    },
-    {
-        "title": "test title no 4",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": true,
-        "author_id": 4
-    },
-    {
-        "title": "test title no 5",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": true,
-        "author_id": 5
-    },
-    {
-        "title": "test title no 6",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": false,
-        "author_id": 1
-    },
-    {
-        "title": "test title no 7",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": false,
-        "author_id": 2
-    },
-    {
-        "title": "test title no 8",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": false,
-        "author_id": 3
-    },
-    {
-        "title": "test title no 9",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": false,
-        "author_id": 4
-    },
-    {
-        "title": "test title no 10",
-        "description": "This project has a description. A unique description that no other project has! In fact search as long and as hard as you like and you'll never in your life find one that looks the same! :O",
-        "public": false,
-        "author_id": 5
-    }
+  {
+    "title": "Create a task management system",
+    "description": "Develop a web-based task management system with user authentication and project management features.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Design a new website layout",
+    "description": "Design a modern and responsive website layout for a client's e-commerce website.",
+    "state": "completed",
+    "public": true,
+    "author_id": 2
+  },
+  {
+    "title": "Implement user account registration",
+    "description": "Develop user registration and login functionality with password encryption.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 3
+  },
+  {
+    "title": "Write a blog post on web development",
+    "description": "Create a blog post discussing the latest trends in web development.",
+    "state": "todo",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Build a mobile app prototype",
+    "description": "Create a prototype of a mobile app for a client's business idea.",
+    "state": "abandoned",
+    "public": true,
+    "author_id": 5
+  },
+  {
+    "title": "Test and debug the website",
+    "description": "Perform testing and debugging of a client's website to ensure it functions smoothly.",
+    "state": "completed",
+    "public": true,
+    "author_id": 6
+  },
+  {
+    "title": "Plan a marketing campaign",
+    "description": "Develop a marketing campaign strategy to promote a new product launch.",
+    "state": "todo",
+    "public": true,
+    "author_id": 7
+  },
+  {
+    "title": "Research industry trends",
+    "description": "Conduct research on current trends in the tech industry and compile a report.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 3
+  },
+  {
+    "title": "Review and update security protocols",
+    "description": "Review and update the security protocols for the company's internal network.",
+    "state": "completed",
+    "public": true,
+    "author_id": 9
+  },
+  {
+    "title": "Organize a team-building event",
+    "description": "Plan and organize a team-building event for the company's employees.",
+    "state": "todo",
+    "public": true,
+    "author_id": 10
+  },
+  {
+    "title": "Develop a new product concept",
+    "description": "Brainstorm and create a concept for a new product to expand the product line.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 11
+  },
+  {
+    "title": "Prepare financial reports",
+    "description": "Compile and prepare financial reports for the end of the quarter.",
+    "state": "completed",
+    "public": true,
+    "author_id": 12
+  },
+  {
+    "title": "Redesign the company logo",
+    "description": "Redesign the company's logo to give it a fresh and modern look.",
+    "state": "todo",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Conduct user testing",
+    "description": "Conduct user testing sessions for a software application and gather feedback.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 2
+  },
+  {
+    "title": "Develop a content marketing strategy",
+    "description": "Create a content marketing strategy to enhance the company's online presence.",
+    "state": "abandoned",
+    "public": true,
+    "author_id": 5
+  },
+  {
+    "title": "Create a task management system",
+    "description": "Develop a web-based task management system with user authentication and project management features.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Conduct a security audit",
+    "description": "Perform a comprehensive security audit of the company's systems and networks.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Design a new website layout",
+    "description": "Design a modern and responsive website layout for a client's e-commerce website.",
+    "state": "completed",
+    "public": true,
+    "author_id": 2
+  },
+  {
+    "title": "Create a social media marketing plan",
+    "description": "Develop a social media marketing plan to increase the company's online presence.",
+    "state": "todo",
+    "public": true,
+    "author_id": 2
+  },
+  {
+    "title": "Implement user account registration",
+    "description": "Develop user registration and login functionality with password encryption.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 3
+  },
+  {
+    "title": "Update the website's user interface",
+    "description": "Revamp the user interface of the company's website for a more user-friendly experience.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 3
+  },
+  {
+    "title": "Write a blog post on web development",
+    "description": "Create a blog post discussing the latest trends in web development.",
+    "state": "todo",
+    "public": true,
+    "author_id": 4
+  },
+  {
+    "title": "Conduct market research",
+    "description": "Conduct market research to identify potential opportunities for business expansion.",
+    "state": "todo",
+    "public": true,
+    "author_id": 4
+  },
+  {
+    "title": "Build a mobile app prototype",
+    "description": "Create a prototype of a mobile app for a client's business idea.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 5
+  },
+  {
+    "title": "Create a marketing video",
+    "description": "Produce a promotional marketing video for the company's latest product launch.",
+    "state": "todo",
+    "public": true,
+    "author_id": 5
+  },
+  {
+    "title": "Optimize website performance",
+    "description": "Optimize the website's performance to reduce loading times and improve user experience.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Review and update the mobile app UI",
+    "description": "Review and update the user interface of the company's mobile app for a more polished look.",
+    "state": "todo",
+    "public": true,
+    "author_id": 1
+  },
+  {
+    "title": "Create a content marketing strategy",
+    "description": "Develop a content marketing strategy to boost the company's online presence.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 2
+  },
+  {
+    "title": "Prepare financial reports",
+    "description": "Compile and prepare financial reports for the end of the quarter.",
+    "state": "completed",
+    "public": true,
+    "author_id": 2
+  },
+  {
+    "title": "Conduct a user survey",
+    "description": "Gather user feedback through surveys to enhance the user experience of the software application.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 3
+  },
+  {
+    "title": "Create a new logo design",
+    "description": "Design a fresh and innovative logo for the company's rebranding efforts.",
+    "state": "todo",
+    "public": true,
+    "author_id": 3
+  },
+  {
+    "title": "Research industry trends",
+    "description": "Conduct research on current trends in the tech industry and compile a report.",
+    "state": "in-progress",
+    "public": true,
+    "author_id": 4
+  },
+  {
+    "title": "Redesign the company website",
+    "description": "Redesign the company's website to provide a more engaging user experience.",
+    "state": "todo",
+    "public": true,
+    "author_id": 4
+  },
+  {
+    "title": "Plan a marketing campaign",
+    "description": "Develop a marketing campaign strategy to promote a new product launch.",
+    "state": "todo",
+    "public": true,
+    "author_id": 5
+  },
+  {
+    "title": "Review and update security protocols",
+    "description": "Review and update the security protocols for the company's internal network.",
+    "state": "completed",
+    "public": true,
+    "author_id": 5
+  }
 ]
+    
+    
+  
+  

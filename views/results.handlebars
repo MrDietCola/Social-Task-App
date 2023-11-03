@@ -1,20 +1,26 @@
 <div class="d-flex align-items-center flex-column w-100">
 
+{{#if users}}
   <h2 class="display-5">Users</h2>
+{{/if}}
   {{#each users as |user|}}
     <div class="user-card max-width w-100">
       <a href="/user/{{user.id}}" class="none"><h4>{{user.username}}</h4></a>
     </div>
   {{/each}}
 
+{{#if tags}}
   <h2 class="display-5">Tags</h2>
+{{/if}}
   {{#each tags as |tag|}}
     <div class="user-card max-width w-100">
       <a href="/tags/{{tag.id}}" class="none"><h4>{{tag.tag_name}}</h4></a>
     </div>
   {{/each}}
 
+{{#if tasks}}
   <h2 class="display-5">Tasks</h2>
+{{/if}}
   {{#each tasks as |task|}}
     <div class="user-card max-width w-100 ">
       <div class="d-flex justify-content-between">

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/task-page.css">
 
 <div class="row d-flex justify-content-center">
-    <aside id="tag-side" class="col-3 d-flex flex-column">
+    <aside id="tag-side" class="col-4 d-flex flex-column br-4 p-0">
         {{#if tags}}
         {{#each tags as |tag|}}
         {{> tag-card}}
@@ -22,3 +22,7 @@
         </div>
     </section>
 </div>
+
+{{log user}}
+
+

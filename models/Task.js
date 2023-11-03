@@ -20,7 +20,7 @@ Task.init(
     },
     state: {
       type: DataTypes.STRING,
-      defaultValue: 'in progress'
+      defaultValue: 'todo'
     },
     date_created: {
       type: DataTypes.DATE,

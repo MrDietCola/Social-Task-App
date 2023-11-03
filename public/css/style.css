@@ -159,6 +159,7 @@ a {
 
 .tag-button:hover {
   opacity: 75%;
+  text-decoration: none!important;
 }
 
 .user-card {
@@ -176,4 +177,9 @@ a {
 .none {
   text-decoration: none;
   color: black;
+}
+
+.br-4 {
+  border-radius: 4px!;
+  /* background-color: red; */
 }
