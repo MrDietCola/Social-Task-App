@@ -55,14 +55,17 @@ header,
   position: absolute;
   right: 0;
   top: 0;
-  width: 70%;
+  width: 105%;
+  height: 140%;
   z-index: -1;
 }
 
 .image-stack__item--top {
   padding-top: 50px;
   margin: 50px;
-  width: 60%;
+  width: 120%;
+  height: 120%;
+  
 }
 
 img {
