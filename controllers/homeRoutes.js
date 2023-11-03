@@ -214,7 +214,7 @@ router.get('/tasks/:id', async (req, res) => {
       res.redirect(302, '/tasks');
       return;
     }
-    const task = taskData.get({ plain: true });
+    let task = taskData.get({ plain: true });
 
     const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
     const unlinkedTagsData = await Tag.findAll({
@@ -224,7 +224,7 @@ router.get('/tasks/:id', async (req, res) => {
         }
       }
     });
-    const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
+    let unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
     let emotion = await getEmotion(task.description);
 
