@@ -224,7 +224,7 @@ router.get('/tasks/:id', async (req, res) => {
         }
       }
     });
-    const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
+    let unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
     let emotion = await getEmotion(task.description);
 
@@ -270,19 +270,31 @@ router.get('/user/:id', async (req, res) => {
         },
       ]
     })
+
+    let friends = [];
+    if (req.session.logged_in) {
+       friends = await Friends.findAll({
+        where: {
+          user_id: req.session.user.id, 
+          friend_id: req.params.id
+        }, 
+      })
+    }
+    
+    console.log(friends);
     // Serialize data so the template can read it
     let tasks;
     const users = userData.get({ plain: true });
     if (users && tasksData.length > 0) {
       tasks = tasksData.map((task) => task.get({ plain: true }));
       tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
-      res.render('user', { tasks, users, ...req.session });
+      res.render('user', { tasks, users, ...req.session, friends});
     }
     else if (users) {
-      res.render('user', { tasks: [], users, ...req.session });
+      res.render('user', { tasks: [], users, ...req.session, friends });
     }
     else {
-      res.render('user', { tasks, users, ...req.session });
+      res.render('user', { tasks, users, ...req.session, friends });
     }
   } catch (err) {
     console.error(err);

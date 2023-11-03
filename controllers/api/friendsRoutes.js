@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   try {
     const userFriendsData = await Friends.findAll({
       where: {
-        user_id: req.session.user_id
+        user_id: req.session.user.id
       },
       include: [
         {
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     const friends =  userFriendsData.map(friend => friend.get({ plain: true }))
 
     for (const friend of friends) {
-      if (friend.friend_id === req.body.friend_id && friend.user_id === req.body.user_id) {
+      if (friend.friend_id == req.body.friend_id && friend.user_id == req.body.user_id) {
         res.status(404).json({ message: 'you are already friends!' });
         return
       } 
