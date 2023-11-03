@@ -20,7 +20,8 @@ router.get('/', async (req, res) => {
     const quote = response.data.content;
 
     if (req.session.logged_in) {
-      res.redirect('/tasks', { ...req.session });
+      res.redirect(302, '/tasks');
+      return 
     }
 
     res.render('landingPage', {
@@ -36,14 +37,15 @@ router.get('/', async (req, res) => {
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/tasks', { ...req.session });
+    res.redirect(302, '/tasks');
     return;
   }
 
-  res.render('login', { logged_in: req.session.logged_in });
+  res.render('login', { ...req.session });
 });
 
 router.get('/tasks', async (req, res) => {
+ try { 
   const tasksData = await Task.findAll({
     where: {
       public: true
@@ -68,6 +70,7 @@ router.get('/tasks', async (req, res) => {
     tags = tagsData.map((tag) => tag.get({ plain: true }));
   }
   // Serialize data so the template can read it
+  // console.log(req.session);
   if (tasksData.length > 0) {
     const tasks = tasksData.map((task) => task.get({ plain: true }));
     res.render('tasks', { tasks, tags, ...req.session });
@@ -75,9 +78,12 @@ router.get('/tasks', async (req, res) => {
   else {
     res.render('tasks', { tasks: [], tags, ...req.session })
   }
+} catch (err) {
+  console.error(err);
+  res.status(500).json(err);
+}
 });
 
-// GET one tag and associated tasks
 router.get('/tags/:id', async (req, res) => {
   const tasksData = await Tag.findByPk(req.params.id, {
     include: [
@@ -138,7 +144,7 @@ router.get('/search/:searchVal', async (req, res) => {
     }
   })
   const taskInfo = taskData.map(task => task.dataValues);
-  console.log(taskInfo[0].user.dataValues.username);
+  // console.log(taskInfo[0].user.dataValues.username);
 
   let tasks = taskInfo.filter(task => {
     const { title, description } = task;
@@ -161,15 +167,15 @@ router.get('/search/:searchVal', async (req, res) => {
     );
   });
 
-  if (!(users.length > 0)) {
+  if (users === null) {
     users = [];
   }
 
-  if (!(tasks.length > 0)) {
+  if (tasks === null) {
     tasks = [];
   }
 
-  if (!(tags.length > 0)) {
+  if (tags === null) {
     tags = [];
   }
 
@@ -205,7 +211,7 @@ router.get('/tasks/:id', async (req, res) => {
     })
 
     if (!taskData) {
-      res.redirect('/tasks', { ...req.session });
+      res.redirect(302, '/tasks');
       return;
     }
     const task = taskData.get({ plain: true });
@@ -218,7 +224,7 @@ router.get('/tasks/:id', async (req, res) => {
         }
       }
     });
-    unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
+    const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
     let emotion = await getEmotion(task.description);
 
@@ -278,28 +284,6 @@ router.get('/user/:id', async (req, res) => {
     else {
       res.render('user', { tasks, users, ...req.session });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
-});
-
-
-router.get('/home', async (req, res) => {
-  try {
-    const response = await axios.request(options);
-    const quote = response.data.content;
-
-    if (req.session.logged_in) {
-      res.redirect('/tasks');
-    }
-
-    res.render('landingPage', {
-      layout: 'landing.handlebars',
-      quote: quote,
-      ...req.session, // Pass the logged_in flag to the template
-    });
-
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

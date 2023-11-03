@@ -1,23 +1,33 @@
+<link rel="stylesheet" href="/css/task-page.css">
 <div id="friends-page-body">
-    <h1>This are the friends</h1>
-    <h2>Welcome, {{this.name}}!</h2>
-<div id="friends-page-body">
-  {{#each friends as |friend|}}
-  <section>
-    <h2>Profile:</h2>
-    <p>Username: {{friend.user.username}}</p>
-
-    {{#each friend.user.tasks as |task|}}
-    <div>
-      <p>Task Title: {{task.title}}</p>
-      <section class="post-sec">
-        {{> test}}
-      </section>
+  <div class="d-flex">
+    <div class="">
+      <h1>This are the friends</h1>
+      <h2>Welcome, {{this.name}}!</h2>
+      <div>
+        {{#each friends as |friend|}}
+        <a href="/user/{{friend.user.id}}">{{friend.user.username}}</a>
+        {{/each}}
+      </div>
     </div>
-    {{/each}}
-  </section>
-  {{/each}}
+    <div id="friends-page-body ">
+      {{#each friends as |friend|}}
+        <section>
+          {{!-- <h2>Profile:</h2>
+          <p>Username: {{friend.user.username}}</p> --}}
 
+          {{#each friend.user.tasks as |task|}}
+          <div>
+            {{!-- <p>Task Title: {{task.title}}</p> --}}
+            {{!-- <section class="post-sec"> --}}
+              {{!-- {{> test}} --}}
+              {{> task-card}}
+            {{!-- </section> --}}
+          </div>
+          {{/each}}
+        </section>
+      {{/each}}
+    </div>
+  </div>
+</div>
 
-</div>
-</div>

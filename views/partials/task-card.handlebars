@@ -1,13 +1,21 @@
-<section>
-    <h4><a href="/tasks/{{id}}">{{title}}</a></h4>
-    <a href="/user/{{author_id}}">{{user.username}}</a>
-    <p>{{date_created}}</p>
-    <p>{{description}}</p>
-    <ul>
+<section class="task-card">
+    <div class="task-card-header bg-light d-flex justify-content-between">
+        <h4><a href="/tasks/{{id}}">{{title}}</a></h4>
+        <div class="task-info d-flex justify-content-between">
+            <a href="/user/{{author_id}}">{{user.username}}</a>
+            <p>{{format_date date_created}}</p>
+        </div>
+        <div class="state {{state}}">
+            {{state}}
+        </div>
+    </div>
+
+    <div class="task-card-body">
+        <p>{{description}}</p>
+        <div class="d-flex">
         {{#each task_by_taskTag as |taskTag|}}
-        <li>
-            <a href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
-        </li>
+            <a class="button-4" href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
         {{/each}}
-    </ul>
+        </div>
+    </div>
 </section>

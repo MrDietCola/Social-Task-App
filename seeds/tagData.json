@@ -14,5 +14,149 @@
     {
         "tag_name": "Education",
         "author_id": 4
+    },
+    {
+        "tag_name": "Technology",
+        "author_id": 5
+    },
+    {
+        "tag_name": "Leadership",
+        "author_id": 6
+    },
+    {
+        "tag_name": "Health and Wellness",
+        "author_id": 7
+    },
+    {
+        "tag_name": "Science",
+        "author_id": 8
+    },
+    {
+        "tag_name": "Business Strategy",
+        "author_id": 9
+    },
+    {
+        "tag_name": "Marketing",
+        "author_id": 10
+    },
+    {
+        "tag_name": "Fitness",
+        "author_id": 1
+    },
+    {
+        "tag_name": "Environment",
+        "author_id": 2
+    },
+    {
+        "tag_name": "Self-Help",
+        "author_id": 3
+    },
+    {
+        "tag_name": "Art and Creativity",
+        "author_id": 4
+    },
+    {
+        "tag_name": "Communication",
+        "author_id": 5
+    },
+    {
+        "tag_name": "Sustainability",
+        "author_id": 6
+    },
+    {
+        "tag_name": "Finance",
+        "author_id": 7
+    },
+    {
+        "tag_name": "Motivation",
+        "author_id": 8
+    },
+    {
+        "tag_name": "Literature",
+        "author_id": 9
+    },
+    {
+        "tag_name": "Psychology",
+        "author_id": 10
+    },
+    {
+        "tag_name": "Travel",
+        "author_id": 1
+    },
+    {
+        "tag_name": "Music",
+        "author_id": 2
+    },
+    {
+        "tag_name": "Career Development",
+        "author_id": 3
+    },
+    {
+        "tag_name": "Parenting",
+        "author_id": 4
+    },
+    {
+        "tag_name": "Sports",
+        "author_id": 5
+    },
+    {
+        "tag_name": "History",
+        "author_id": 6
+    },
+    {
+        "tag_name": "Cooking",
+        "author_id": 7
+    },
+    {
+        "tag_name": "Gardening",
+        "author_id": 8
+    },
+    {
+        "tag_name": "Fashion",
+        "author_id": 9
+    },
+    {
+        "tag_name": "Photography",
+        "author_id": 10
+    },
+    {
+        "tag_name": "Design",
+        "author_id": 1
+    },
+    {
+        "tag_name": "Philanthropy",
+        "author_id": 2
+    },
+    {
+        "tag_name": "Meditation",
+        "author_id": 3
+    },
+    {
+        "tag_name": "Entrepreneurship",
+        "author_id": 4
+    },
+    {
+        "tag_name": "Astronomy",
+        "author_id": 5
+    },
+    {
+        "tag_name": "DIY Projects",
+        "author_id": 6
+    },
+    {
+        "tag_name": "Social Media",
+        "author_id": 7
+    },
+    {
+        "tag_name": "Philosophy",
+        "author_id": 8
+    },
+    {
+        "tag_name": "Nutrition",
+        "author_id": 9
+    },
+    {
+        "tag_name": "Home Improvement",
+        "author_id": 10
     }
 ]

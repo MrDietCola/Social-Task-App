@@ -1,8 +1,18 @@
 module.exports = {
-  format_date: (date) => {
-    // Format date as MM/DD/YYYY
-    return date.toLocaleDateString();
+  format_date: (currentDate) => {
+    // Format the date as "month day, year"
+    const date = new Date(currentDate);
+
+    // Get the month, day, and year
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    const formattedDate = `${month} ${day}, ${year}`;
+
+    return formattedDate;
   },
+
   format_amount: (amount) => {
     // format large numbers with commas
     return parseInt(amount).toLocaleString();
@@ -19,11 +29,17 @@ module.exports = {
       return `<span for="img" aria-label="gear">⚙️</span>`;
     }
   },
+
   format_tag: (tags) => {
     tags = tags.map((tagObj) => tagObj.tag_name)
     if (tags.length < 1) {
       return "untagged";
     }
     return tags.join(", ");
+  },
+
+  ifeq: (a, b, options) => {
+    if (a == b) { return options.fn(this); }
+    return options.inverse(this);
   }
 };
