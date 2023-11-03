@@ -11,17 +11,22 @@
         <p>
             {{format_date task.date_created}}
         </p>
-        <ul>
-            {{#each task.task_by_taskTag as |tag|}}
-            <li>
-                <a href="/tags/{{tag.id}}" class="none">
-                    <p class="tags">{{tag.tag_name}}</p>
-                </a>
-            </li>
-            {{/each}}
-            {{> linkTagToTask}}
-        </ul>
+        <div class="border border-1 p-2">
+            <ul class="d-flex flex-row" id="tag-list" data-task="{{task.id}}">
+                {{#each task.task_by_taskTag as |tag|}}
+                <li class="d-flex justify-content-between border p-2 m-1 align-content-center">
+                    <a href="/tags/{{tag.id}}" class="">
+                        <p class="tags mb-0 align-center">{{tag.tag_name}}</p>
+                    </a>
 
+                    {{#if ../owner}}
+                    <button class="btn" data-tag="{{tag.id}}">Remove</button>
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ul>
+            {{> linkTagToTask}}
+        </div>
         {{> post}}
     </section>
     <aside>
@@ -51,3 +56,6 @@
         {{/each}}
     </div>
 </div>
+{{#if owner}}
+<script src="/js/removeTag.js"></script>
+{{/if}}
