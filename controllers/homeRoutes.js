@@ -182,76 +182,75 @@ router.get('/search/:searchVal', async (req, res) => {
   res.render('results', { tasks, users, tags, ...req.session })
 });
 
-router.get('/tasks/:id', async (req, res) => {
-  try {
-    const taskData = await Task.findByPk(req.params.id, {
-      where: {
-        public: true
-      },
-      include: [
-        {
-          model: User,
-          attributes: ['username', 'email']
-        },
-        {
-          model: Tag,
-          attributes: ['id', 'tag_name'],
-          as: 'task_by_taskTag'
-        },
-        {
-          model: Comments,
 
-          include: [{
-            model: User,
-            attributes: ['username'],
-            foreignKey: "author_id",
-          }]
-        }
-      ]
-    })
+// router.get('/tasks/:id', async (req, res) => {
+//   try {
+//     const taskData = await Task.findByPk(req.params.id, {
+//       where: {
+//         public: true
+//       },
+//       include: [
+//         {
+//           model: User,
+//           attributes: ['username', 'email']
+//         },
+//         {
+//           model: Tag,
+//           attributes: ['id', 'tag_name'],
+//           as: 'task_by_taskTag'
+//         },
+//         {
+//           model: Comments,
 
-    if (!taskData) {
-      res.redirect(302, '/tasks');
-      return;
-    }
-    const task = taskData.get({ plain: true });
+//           include: [{
+//             model: User,
+//             attributes: ['username'],
+//             foreignKey: "author_id",
+//           }]
+//         }
+//       ]
+//     })
 
-    const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
-    const unlinkedTagsData = await Tag.findAll({
-      where: {
-        id: {
-          [Op.notIn]: linkedTagIDs
-        }
-      }
-    });
+//     if (!taskData) {
+//       res.redirect(302, '/tasks');
+//       return;
+//     }
+//     const task = taskData.get({ plain: true });
 
-    let owner = false; 
+//     const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
+//     const unlinkedTagsData = await Tag.findAll({
+//       where: {
+//         id: {
+//           [Op.notIn]: linkedTagIDs
+//         }
+//       }
+//     });
 
-    if (task.author_id == req.session.user.id) {
-      owner = true;
-    }
+//     let owner = false; 
 
-    const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
+//     if (task.author_id == req.session.user.id) {
+//       owner = true;
+//     }
 
-    let emotion = await getEmotion(task.description);
+//     const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
-    if (!req.session.logged_in || task.author_id != req.session.user.id) {
-      unlinkedTags = [];
-    }
+//     let emotion = await getEmotion(task.description);
 
-    res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
+//     if (!req.session.logged_in || task.author_id != req.session.user.id) {
+//       unlinkedTags = [];
+//     }
 
-  // Serialize data so the template can read it
-});
+//     res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/user/:id', async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
-      attributes: { exclude: ['id', 'password'] }
+      attributes: { exclude: ['password'] }
     });
 
     // Shows private posts as well if the user page belongs to the current user. 
@@ -299,6 +298,64 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
+router.get('/tasks/:id', async (req, res) => {
+  try {
+    const taskData = await Task.findByPk(req.params.id, {
+      where: {
+        public: true
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['username', 'email']
+        },
+        {
+          model: Tag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+        {
+          model: Comments,
+
+          include: [{
+            model: User,
+            attributes: ['username'],
+            foreignKey: "author_id",
+          }]
+        }
+      ]
+    })
+
+    if (!taskData) {
+      res.redirect(302, '/tasks');
+      return;
+    }
+    const task = taskData.get({ plain: true });
+
+    const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
+    const unlinkedTagsData = await Tag.findAll({
+      where: {
+        id: {
+          [Op.notIn]: linkedTagIDs
+        }
+      }
+    });
+    let unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
+
+    let emotion = await getEmotion(task.description);
+    let owner = true;
+    if (!req.session.logged_in || task.author_id != req.session.user.id) {
+      unlinkedTags = [];
+      owner = false;
+    }
+
+    res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get('/add-task', withAuth, (req, res) => {
   try {
     res.render('addTask', { ...req.session });
@@ -308,9 +365,18 @@ router.get('/add-task', withAuth, (req, res) => {
   }
 })
 
-router.get('/edit-task', withAuth, (req, res) => {
+router.get('/edit-task/:id', withAuth, async (req, res) => {
   try {
-    res.render('addTask', { ...req.session, update: true });
+    const taskData = await Task.findByPk(req.params.id, {
+      include: {
+          model: Tag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+      }
+    })
+
+    const task = taskData.get({ plain: true });
+    res.render('addTask', { ...req.session, update: true, task });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

@@ -49,6 +49,7 @@ a:hover {
 
 .task-card-body {
   padding: 10px;
+  position: relative;
 }
 
 .task-info{
@@ -57,6 +58,24 @@ a:hover {
   right: 6%;
   padding-right: 10px;
   width: 40%;
+}
+
+#edit-btn {
+  background-color: #ff6347;
+  color: white!important;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: fit-content;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 20px 10px 0;
+}
+#edit-btn:hover {
+  background-color: #ff6347;
 }
 
 .button-4 {

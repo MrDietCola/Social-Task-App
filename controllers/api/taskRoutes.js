@@ -48,4 +48,22 @@ router.post('/tag/:id', async (req, res) => {
 
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const taskData = await Task.update({
+      title: req.body.title,
+      description: req.body.description,
+      state: req.body.state,
+      public: req.body.public
+    },
+      {
+        where: { id: req.params.id }
+      });
+
+    res.status(200).json(taskData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

@@ -1,9 +1,36 @@
 <link rel="stylesheet" href="/css/task.css">
 <div id="task-page-body">
 
+
     <section class="auth-sec" id="auth-sec">
         <h3>
             {{task.title}} 
+
+        <div class="task-card-body">
+            <p>{{task.description}}</p>
+            <div class="d-flex">
+            {{#each task.task_by_taskTag as |taskTag|}}
+                <a class="button-4" href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
+            {{/each}}
+            </div>
+            <a href="/edit-task/{{task.id}}" id="edit-btn">Edit Task</a>
+            <ul>
+                {{#each task.task_by_taskTag as |tag|}}
+                <li>
+                    <a href="/tags/{{tag.id}}" class="none">
+                        <p class="tags">{{tag.tag_name}}</p>
+                    </a>
+                </li>
+                {{/each}}
+                {{> linkTagToTask}}
+            </ul>
+        </div>
+    </section>
+
+    <section class="auth-sec" id="auth-sec">
+       <h3>
+            {{task.title}}
+
         </h3>
         <a href="/user/{{task.author_id}}">
             {{task.user.username}}
@@ -11,16 +38,6 @@
         <p>
             {{format_date task.date_created}}
         </p>
-        <ul>
-            {{#each task.task_by_taskTag as |tag|}}
-            <li>
-                <a href="/tags/{{tag.id}}" class="none">
-                    <p class="tags">{{tag.tag_name}}</p>
-                </a>
-            </li>
-            {{/each}}
-            {{> linkTagToTask}}
-        </ul>
 
         {{> post}}
     </section>
