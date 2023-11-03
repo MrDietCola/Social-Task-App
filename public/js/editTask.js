@@ -8,7 +8,7 @@ const newTaskHandler = async (event) => {
 
   console.log(title, body, state, visibility);
   if (title && body && state) {
-    const response = await fetch(`/api/tasks`, {
+    const response = await fetch(`/api/tasks/`, {
       method: 'put',
       body: JSON.stringify({
         title: title,
@@ -28,4 +28,4 @@ const newTaskHandler = async (event) => {
   }
 };
 
-document.querySelector('.new-task-form').addEventListener('submit', newTaskHandler);
+document.getElementById('button').addEventListener('click', newTaskHandler);

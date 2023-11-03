@@ -21,6 +21,9 @@
                 <a class="button-4" href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
             {{/each}}
             </div>
+            {{#if owner}}
+            <a href="/edit-task/{{task.id}}">Edit Task</a>
+            {{/if}}
         </div>
     </section>
     {{!-- <section class="auth-sec" id="auth-sec"> --}}
