@@ -138,6 +138,11 @@ a:hover {
   color: white;
 }
 
+.hiatus {
+  background-image: linear-gradient(120deg, #853893 0%, #fb7ef5 100%);
+  color: white;
+}
+
 h4 {
   padding-bottom: 35px;
   padding-top: 15px;

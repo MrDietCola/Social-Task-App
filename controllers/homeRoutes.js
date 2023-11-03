@@ -224,6 +224,13 @@ router.get('/tasks/:id', async (req, res) => {
         }
       }
     });
+
+    let owner = false; 
+
+    if (task.author_id == req.session.user.id) {
+      owner = true;
+    }
+
     const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
     let emotion = await getEmotion(task.description);
@@ -232,7 +239,7 @@ router.get('/tasks/:id', async (req, res) => {
       unlinkedTags = [];
     }
 
-    res.render('task', { task, ...req.session, emotion, unlinkedTags })
+    res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -270,6 +277,8 @@ router.get('/user/:id', async (req, res) => {
         },
       ]
     })
+
+    
     // Serialize data so the template can read it
     let tasks;
     const users = userData.get({ plain: true });
@@ -293,6 +302,15 @@ router.get('/user/:id', async (req, res) => {
 router.get('/add-task', withAuth, (req, res) => {
   try {
     res.render('addTask', { ...req.session });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+})
+
+router.get('/edit-task', withAuth, (req, res) => {
+  try {
+    res.render('addTask', { ...req.session, update: true });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
