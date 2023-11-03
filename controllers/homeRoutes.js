@@ -91,6 +91,9 @@ router.get('/tags/:id', async (req, res) => {
         model: Task,
         through: TaskTag,
         as: 'tag_by_taskTag',
+        where: {
+          public: true
+        },
         include: [
           {
             model: User,
@@ -107,8 +110,12 @@ router.get('/tags/:id', async (req, res) => {
     ]
   })
 
-  const allTasks = tasksData.get({ plain: true });
-  const tasks = allTasks.tag_by_taskTag
+
+  let tasks = [];
+  if (tasksData) {
+    const allTasks = tasksData.get({ plain: true });
+    tasks = allTasks.tag_by_taskTag
+  }
 
   const tagsData = await Tag.findAll()
   let tags = []
