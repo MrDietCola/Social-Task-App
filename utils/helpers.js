@@ -38,8 +38,10 @@ module.exports = {
     return tags.join(", ");
   },
 
-  ifeq: (a, b, options) => {
-    if (a == b) { return options.fn(this); }
-    return options.inverse(this);
-  }
+  ifeq: (a, b) => {
+    return a == b;
+  }, 
+
+  and: (a,b) => a==b
+
 };

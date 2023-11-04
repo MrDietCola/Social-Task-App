@@ -16,6 +16,9 @@
 
         <div class="task-card-body">
             <p>{{task.description}}</p>
+            {{#if owner}}
+            <a href="/edit-task/{{task.id}}">Edit Task</a>
+            {{/if}}
             <ul class="d-flex flex-row" id="tag-list" data-task="{{task.id}}">
                 {{#each task.task_by_taskTag as |tag|}}
                 <li class="d-flex justify-content-between p-2 m-1 align-content-center">
@@ -30,12 +33,10 @@
             </ul>
             {{> linkTagToTask}}
         </div>
-        <p class="m-3">Emotion: {{emotion}}</p>
-        <aside class="m-3">
-            <h2>Comments:</h2>
-            <button onclick="openModal()" class="comment-btn">View Comments</button>
-        </aside>
-
+    </section>
+    <aside>
+        <button onclick="openModal()" class="comment-btn">View Comments</button>
+    </aside>
 </div>
 <script>
     function openModal() {
@@ -63,6 +64,7 @@
         </div>
     </div>
 </div>
+ 
 {{#if owner}}
 <script src="/js/removeTag.js"></script>
 {{/if}}

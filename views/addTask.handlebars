@@ -3,27 +3,27 @@
   <div class="col-md-6">
 
     <form class="form new-task-form">
-      <h3>Create a New Project:</h3>
+      <h3>Create a New Task:</h3>
       {{!-- task title --}}
       <div>
         <label for="task-title-input">Task Title:</label>
-        <input type="text" id="task-title-input" />
+        <input type="text" id="task-title-input" {{#if update}} value="{{task.title}}"{{/if}}/>
       </div>
       {{!-- task description/body --}}
       <div>
         <label for="task-body-input">Task Body:</label>
-        <textarea id="task-body-input" cols="30" rows="10"></textarea>
+        <textarea id="task-body-input" cols="30" rows="10">{{#if update}} {{task.description}} {{/if}}</textarea>
       </div>
       {{!-- task state --}}
       {{!-- in progress, completed, hiatus, abandoned, planned --}}
       <div>
         <label for="task-state-input">Task Status:</label>
         <select name="" id="task-state-input">
-          <option value="in progress">In Progress</option>
-          <option value="completed">Completed</option>
-          <option value="hiatus">Hiatus</option>
-          <option value="abandoned">Abandoned</option>
-          <option value="planned">Planned</option>
+          <option value="in-progress" {{#if (and update (ifeq task.state "in-progress"))}}selected{{/if}}>In Progress</option>
+          <option value="completed" {{#if (and update (ifeq task.state "completed"))}}selected{{/if}}>Completed</option>
+          <option value="hiatus" {{#if (and update (ifeq task.state "hiatus"))}}selected{{/if}}>Hiatus</option>
+          <option value="abandoned" {{#if (and update (ifeq task.state "abandoned"))}}selected{{/if}}>Abandoned</option>
+          <option value="planned" {{#if (and update (ifeq task.state "planned"))}}selected{{/if}}>Planned</option>
         </select>
       </div>
       {{!-- public/private switch --}}
@@ -37,5 +37,8 @@
     </form>
   </div>
 </div>
-
-<script src="./js/addTask.js"></script>
+{{#if update}} 
+<script src="/js/editTask.js"></script>
+{{else}}
+<script src="/js/addTask.js"></script>
+{{/if}}

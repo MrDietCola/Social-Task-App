@@ -6,10 +6,13 @@
     <a href="mailto: {{users.email}}">Contact via email</a>
     {{#if logged_in}}
         {{#if friends}}
-            <p class="add-friend">{{users.username}} is your friend!</p>
+             <p class="add-friend">{{users.username}} is your friend!</p>
         {{else}}
+            {{#if (ifeq users.id user.id)}} 
+            {{else}}
             <button class="button-4 add-friend" data-id="{{users.user.id}}" data-user_id="{{user.id}}" data-username="{{users.username}}" id="add-friend">Add to friends</button>
             <script src="/js/user.js"></script>
+            {{/if}}           
         {{/if}}
     {{/if}}
 </section>
