@@ -271,18 +271,14 @@ router.get('/user/:id', async (req, res) => {
       ]
     })
 
-    const friendData = await Friends.findOne({
-      where: {
-        friend_id: req.params.id,
-        user_id: req.session.user.id
-      }
-    });
-
-    console.log(friendData);
-    
     let friends = [];
-    if (friendData) {
-      friends = true
+    if (req.session.logged_in) {
+      friends = await Friends.findAll({
+        where: {
+          user_id: req.session.user.id,
+          friend_id: req.params.id
+        },
+      })
     }
 
     let tasks;
