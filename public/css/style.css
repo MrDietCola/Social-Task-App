@@ -1,36 +1,4 @@
-header,
-.project:not(:last-child) {
-  border-bottom: 1px solid #ccc;
-}
-
-.no-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: #1b89bc;
-  text-decoration: none;
-  font-size: 100%;
-}
-
-.no-button:hover {
-  color: #065b83;
-  text-decoration: underline;
-}
-
-.dollar-amount {
-  color: #056605;
-  font-weight: bold;
-  margin-left: -5px;
-}
-
-
-
 /* <----- landing page ------> */
-
-
-
-
 .landing-nav {
   font-weight: bolder;
   font-size: 35px;
@@ -55,14 +23,17 @@ header,
   position: absolute;
   right: 0;
   top: 0;
-  width: 70%;
+  width: 105%;
+  height: 140%;
   z-index: -1;
 }
 
 .image-stack__item--top {
   padding-top: 50px;
   margin: 50px;
-  width: 60%;
+  width: 120%;
+  height: 120%;
+  
 }
 
 img {
@@ -181,5 +152,17 @@ a {
 
 .br-4 {
   border-radius: 4px!;
-  /* background-color: red; */
+}
+
+/* nav search button */
+#search-button {
+  color: #ebf4f6;
+  border:solid #ebf4f6 ;
+  background-color: #ff6347;
+}
+
+#search-button:hover {
+  color: #ff6347;
+  background-color: #ebf4f6;
+  border: solid #ff6347;
 }

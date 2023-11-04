@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
     if (req.session.logged_in) {
       res.redirect(302, '/tasks');
-      return 
+      return
     }
 
     res.render('landingPage', {
@@ -45,43 +45,43 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/tasks', async (req, res) => {
- try { 
-  const tasksData = await Task.findAll({
-    where: {
-      public: true
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['username']
+  try {
+    const tasksData = await Task.findAll({
+      where: {
+        public: true
       },
-      {
-        model: Tag,
-        through: TaskTag,
-        attributes: ['id', 'tag_name'],
-        as: 'task_by_taskTag'
-      },
-    ]
-  })
+      include: [
+        {
+          model: User,
+          attributes: ['username']
+        },
+        {
+          model: Tag,
+          through: TaskTag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+      ]
+    })
 
-  const tagsData = await Tag.findAll()
-  let tags = []
-  if (tagsData.length > 0) {
-    tags = tagsData.map((tag) => tag.get({ plain: true }));
+    const tagsData = await Tag.findAll()
+    let tags = []
+    if (tagsData.length > 0) {
+      tags = tagsData.map((tag) => tag.get({ plain: true }));
+    }
+    // Serialize data so the template can read it
+    // console.log(req.session);
+    if (tasksData.length > 0) {
+      const tasks = tasksData.map((task) => task.get({ plain: true }));
+      res.render('tasks', { tasks, tags, ...req.session });
+    }
+    else {
+      res.render('tasks', { tasks: [], tags, ...req.session })
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
   }
-  // Serialize data so the template can read it
-  // console.log(req.session);
-  if (tasksData.length > 0) {
-    const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks, tags, ...req.session });
-  }
-  else {
-    res.render('tasks', { tasks: [], tags, ...req.session })
-  }
-} catch (err) {
-  console.error(err);
-  res.status(500).json(err);
-}
 });
 
 router.get('/tags/:id', async (req, res) => {
@@ -91,6 +91,9 @@ router.get('/tags/:id', async (req, res) => {
         model: Task,
         through: TaskTag,
         as: 'tag_by_taskTag',
+        where: {
+          public: true
+        },
         include: [
           {
             model: User,
@@ -107,8 +110,12 @@ router.get('/tags/:id', async (req, res) => {
     ]
   })
 
-  const allTasks = tasksData.get({ plain: true });
-  const tasks = allTasks.tag_by_taskTag
+
+  let tasks = [];
+  if (tasksData) {
+    const allTasks = tasksData.get({ plain: true });
+    tasks = allTasks.tag_by_taskTag
+  }
 
   const tagsData = await Tag.findAll()
   let tags = []
@@ -144,7 +151,6 @@ router.get('/search/:searchVal', async (req, res) => {
     }
   })
   const taskInfo = taskData.map(task => task.dataValues);
-  // console.log(taskInfo[0].user.dataValues.username);
 
   let tasks = taskInfo.filter(task => {
     const { title, description } = task;
@@ -182,71 +188,6 @@ router.get('/search/:searchVal', async (req, res) => {
   res.render('results', { tasks, users, tags, ...req.session })
 });
 
-
-// router.get('/tasks/:id', async (req, res) => {
-//   try {
-//     const taskData = await Task.findByPk(req.params.id, {
-//       where: {
-//         public: true
-//       },
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['username', 'email']
-//         },
-//         {
-//           model: Tag,
-//           attributes: ['id', 'tag_name'],
-//           as: 'task_by_taskTag'
-//         },
-//         {
-//           model: Comments,
-
-//           include: [{
-//             model: User,
-//             attributes: ['username'],
-//             foreignKey: "author_id",
-//           }]
-//         }
-//       ]
-//     })
-
-//     if (!taskData) {
-//       res.redirect(302, '/tasks');
-//       return;
-//     }
-//     const task = taskData.get({ plain: true });
-
-//     const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
-//     const unlinkedTagsData = await Tag.findAll({
-//       where: {
-//         id: {
-//           [Op.notIn]: linkedTagIDs
-//         }
-//       }
-//     });
-
-//     let owner = false; 
-
-//     if (task.author_id == req.session.user.id) {
-//       owner = true;
-//     }
-
-//     const unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
-
-//     let emotion = await getEmotion(task.description);
-
-//     if (!req.session.logged_in || task.author_id != req.session.user.id) {
-//       unlinkedTags = [];
-//     }
-
-//     res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json(err);
-//   }
-// });
-
 router.get('/user/:id', async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
@@ -277,20 +218,32 @@ router.get('/user/:id', async (req, res) => {
       ]
     })
 
+    const friendData = await Friends.findOne({
+      where: {
+        friend_id: req.params.id,
+        user_id: req.session.user.id
+      }
+    });
+
+    console.log(friendData);
     
-    // Serialize data so the template can read it
+    let friends = [];
+    if (friendData) {
+      friends = true
+    }
+
     let tasks;
     const users = userData.get({ plain: true });
     if (users && tasksData.length > 0) {
       tasks = tasksData.map((task) => task.get({ plain: true }));
       tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
-      res.render('user', { tasks, users, ...req.session });
+      res.render('user', { tasks, users, ...req.session, friends});
     }
     else if (users) {
-      res.render('user', { tasks: [], users, ...req.session });
+      res.render('user', { tasks: [], users, ...req.session, friends });
     }
     else {
-      res.render('user', { tasks, users, ...req.session });
+      res.render('user', { tasks, users, ...req.session, friends });
     }
   } catch (err) {
     console.error(err);
@@ -330,7 +283,7 @@ router.get('/tasks/:id', async (req, res) => {
       res.redirect(302, '/tasks');
       return;
     }
-    const task = taskData.get({ plain: true });
+    let task = taskData.get({ plain: true });
 
     const linkedTagIDs = task.task_by_taskTag.map((tag) => tag.id);
     const unlinkedTagsData = await Tag.findAll({
@@ -363,8 +316,8 @@ router.get('/add-task', withAuth, (req, res) => {
     console.error(err);
     res.status(500).json(err);
   }
-})
-
+});
+  
 router.get('/edit-task/:id', withAuth, async (req, res) => {
   try {
     const taskData = await Task.findByPk(req.params.id, {

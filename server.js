@@ -4,8 +4,9 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
-
+// const imgut =require('imgur');
 const sequelize = require('./config/connection');
+// const fileUpload = require('express-fileupload');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
@@ -37,6 +38,24 @@ app.set('view engine', 'handlebars');
 //aded to acces images
 app.use("/images", express.static(path.join(__dirname, "/public/images")));
 // app.use("/api", express.static(path.join(__dirname, "/controllers/api")));
+
+
+app.post('/upload', (req, res) => {
+  if (!req, files) {
+    return res.status(404).send('Not Files uploaded');
+  }
+
+  let sampleFile = req.files.sampleFile
+  let uploadPath = __dirname + '/uploads/' + sampleFile.name
+
+  sampleFile.mv(uploadPath, function (err,) {
+    if (err) {
+      return res.status(500).send(err)
+    }
+  })
+})
+
+
 
 
 app.use(express.json());

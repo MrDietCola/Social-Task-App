@@ -1,8 +1,8 @@
 {{#if unlinkedTags}}
-<div>
-    <form action="" id="link-new-tag" data-task-id="{{task.id}}">
-        <label for="link-tag-select">Select Tag</label>
-        <select id="link-tag-select">
+<div class="h-auto">
+    <form action="" id="link-new-tag" data-task-id="{{task.id}}" class="d-flex flex-row w-auto py-2">
+        <label for="link-tag-select" class="mr-3">Select Tag:</label>
+        <select id="link-tag-select" class="mr-3 p-2">
             {{#each unlinkedTags as |unlinked-tag|}}
             <option value="{{unlinked-tag.id}}">{{unlinked-tag.tag_name}}</option>
             {{/each}}
