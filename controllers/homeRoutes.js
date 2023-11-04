@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
     if (req.session.logged_in) {
       res.redirect(302, '/tasks');
-      return 
+      return
     }
 
     res.render('landingPage', {
@@ -45,43 +45,43 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/tasks', async (req, res) => {
- try { 
-  const tasksData = await Task.findAll({
-    where: {
-      public: true
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['username']
+  try {
+    const tasksData = await Task.findAll({
+      where: {
+        public: true
       },
-      {
-        model: Tag,
-        through: TaskTag,
-        attributes: ['id', 'tag_name'],
-        as: 'task_by_taskTag'
-      },
-    ]
-  })
+      include: [
+        {
+          model: User,
+          attributes: ['username']
+        },
+        {
+          model: Tag,
+          through: TaskTag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+      ]
+    })
 
-  const tagsData = await Tag.findAll()
-  let tags = []
-  if (tagsData.length > 0) {
-    tags = tagsData.map((tag) => tag.get({ plain: true }));
+    const tagsData = await Tag.findAll()
+    let tags = []
+    if (tagsData.length > 0) {
+      tags = tagsData.map((tag) => tag.get({ plain: true }));
+    }
+    // Serialize data so the template can read it
+    // console.log(req.session);
+    if (tasksData.length > 0) {
+      const tasks = tasksData.map((task) => task.get({ plain: true }));
+      res.render('tasks', { tasks, tags, ...req.session });
+    }
+    else {
+      res.render('tasks', { tasks: [], tags, ...req.session })
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
   }
-  // Serialize data so the template can read it
-  // console.log(req.session);
-  if (tasksData.length > 0) {
-    const tasks = tasksData.map((task) => task.get({ plain: true }));
-    res.render('tasks', { tasks, tags, ...req.session });
-  }
-  else {
-    res.render('tasks', { tasks: [], tags, ...req.session })
-  }
-} catch (err) {
-  console.error(err);
-  res.status(500).json(err);
-}
 });
 
 router.get('/tags/:id', async (req, res) => {
@@ -91,6 +91,9 @@ router.get('/tags/:id', async (req, res) => {
         model: Task,
         through: TaskTag,
         as: 'tag_by_taskTag',
+        where: {
+          public: true
+        },
         include: [
           {
             model: User,
@@ -107,8 +110,12 @@ router.get('/tags/:id', async (req, res) => {
     ]
   })
 
-  const allTasks = tasksData.get({ plain: true });
-  const tasks = allTasks.tag_by_taskTag
+
+  let tasks = [];
+  if (tasksData) {
+    const allTasks = tasksData.get({ plain: true });
+    tasks = allTasks.tag_by_taskTag
+  }
 
   const tagsData = await Tag.findAll()
   let tags = []
@@ -144,7 +151,6 @@ router.get('/search/:searchVal', async (req, res) => {
     }
   })
   const taskInfo = taskData.map(task => task.dataValues);
-  // console.log(taskInfo[0].user.dataValues.username);
 
   let tasks = taskInfo.filter(task => {
     const { title, description } = task;
@@ -181,6 +187,7 @@ router.get('/search/:searchVal', async (req, res) => {
 
   res.render('results', { tasks, users, tags, ...req.session })
 });
+
 
 router.get('/tasks/:id', async (req, res) => {
   try {
@@ -303,6 +310,24 @@ router.get('/user/:id', async (req, res) => {
 router.get('/add-task', withAuth, (req, res) => {
   try {
     res.render('addTask', { ...req.session });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+  
+router.get('/edit-task/:id', withAuth, async (req, res) => {
+  try {
+    const taskData = await Task.findByPk(req.params.id, {
+      include: {
+          model: Tag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+      }
+    })
+
+    const task = taskData.get({ plain: true });
+    res.render('addTask', { ...req.session, update: true, task });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

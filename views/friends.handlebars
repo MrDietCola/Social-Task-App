@@ -2,8 +2,7 @@
 <div id="friends-page-body">
   <div class="d-flex">
     <div class="">
-      <h1>This are the friends</h1>
-      <h2>Welcome, {{this.name}}!</h2>
+      <h2>Welcome {{user.first_name}}! </h2>
       <div>
         {{#each friends as |friend|}}
         <a href="/user/{{friend.user.id}}">{{friend.user.username}}</a>

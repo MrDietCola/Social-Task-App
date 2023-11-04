@@ -28,7 +28,6 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/tasks">Home</a>
           </li>
-          {{logged_in}}
           {{#if logged_in}}
           <li class="nav-item">
             <a class="nav-link" href="/friends/{{user.id}}" aria-current="page">Friends</a>
@@ -58,7 +57,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           {{#if logged_in}}
-          <a href="#" id="logout">logout</a>
+          <a href="#" id="logout" style="text-decoration: none; color:#ff6347">logout</a>
           {{else}}
           <a class="nav-link" href="/login" role="button" aria-expanded="false" id="">
             Login
