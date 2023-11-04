@@ -234,18 +234,18 @@ router.get('/tasks/:id', async (req, res) => {
     let unlinkedTags = unlinkedTagsData.map((tag) => tag.get({ plain: true }));
 
     let emotion = await getEmotion(task.description);
-
+    let owner = true;
     if (!req.session.logged_in || task.author_id != req.session.user.id) {
       unlinkedTags = [];
+      owner = false;
     }
-
-    res.render('task', { task, ...req.session, emotion, unlinkedTags })
+    console.log(req.session.user.id);
+    
+    res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
   }
-
-  // Serialize data so the template can read it
 });
 
 router.get('/user/:id', async (req, res) => {
