@@ -188,68 +188,6 @@ router.get('/search/:searchVal', async (req, res) => {
   res.render('results', { tasks, users, tags, ...req.session })
 });
 
-router.get('/user/:id', async (req, res) => {
-  try {
-    const userData = await User.findByPk(req.params.id, {
-      attributes: { exclude: ['password'] }
-    });
-
-    // Shows private posts as well if the user page belongs to the current user. 
-    let activeUser;
-    if (req.session.logged_in && req.session.user.id == req.params.id) {
-      activeUser = { author_id: req.params.id }
-    }
-    else {
-      activeUser = {
-        public: true,
-        author_id: req.params.id
-      }
-    }
-
-    const tasksData = await Task.findAll({
-      where: activeUser,
-      include: [
-        {
-          model: Tag,
-          through: TaskTag,
-          attributes: ['id', 'tag_name'],
-          as: 'task_by_taskTag'
-        },
-      ]
-    })
-
-    const friendData = await Friends.findOne({
-      where: {
-        friend_id: req.params.id,
-        user_id: req.session.user.id
-      }
-    });
-
-    console.log(friendData);
-    
-    let friends = [];
-    if (friendData) {
-      friends = true
-    }
-
-    let tasks;
-    const users = userData.get({ plain: true });
-    if (users && tasksData.length > 0) {
-      tasks = tasksData.map((task) => task.get({ plain: true }));
-      tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
-      res.render('user', { tasks, users, ...req.session, friends});
-    }
-    else if (users) {
-      res.render('user', { tasks: [], users, ...req.session, friends });
-    }
-    else {
-      res.render('user', { tasks, users, ...req.session, friends });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
-});
 
 router.get('/tasks/:id', async (req, res) => {
   try {
@@ -301,8 +239,68 @@ router.get('/tasks/:id', async (req, res) => {
       unlinkedTags = [];
       owner = false;
     }
-
+    console.log(req.session.user.id);
+    
     res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
+router.get('/user/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, {
+      attributes: { exclude: ['password'] }
+    });
+
+    // Shows private posts as well if the user page belongs to the current user. 
+    let activeUser;
+    if (req.session.logged_in && req.session.user.id == req.params.id) {
+      activeUser = { author_id: req.params.id }
+    }
+    else {
+      activeUser = {
+        public: true,
+        author_id: req.params.id
+      }
+    }
+
+    const tasksData = await Task.findAll({
+      where: activeUser,
+      include: [
+        {
+          model: Tag,
+          through: TaskTag,
+          attributes: ['id', 'tag_name'],
+          as: 'task_by_taskTag'
+        },
+      ]
+    })
+
+    let friends = [];
+    if (req.session.logged_in) {
+      friends = await Friends.findAll({
+        where: {
+          user_id: req.session.user.id,
+          friend_id: req.params.id
+        },
+      })
+    }
+
+    let tasks;
+    const users = userData.get({ plain: true });
+    if (users && tasksData.length > 0) {
+      tasks = tasksData.map((task) => task.get({ plain: true }));
+      tasks = tasks.map((task) => { Object.assign(task, { users: { username: users.username } }); return task; });
+      res.render('user', { tasks, users, ...req.session, friends});
+    }
+    else if (users) {
+      res.render('user', { tasks: [], users, ...req.session, friends });
+    }
+    else {
+      res.render('user', { tasks, users, ...req.session, friends });
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
