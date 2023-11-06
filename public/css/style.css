@@ -11,6 +11,7 @@ html, body {
 
 .main {
   display: flex;
+  justify-content: center;
   align-items: center;
   padding: 100px;
 
@@ -68,9 +69,9 @@ form {
   width: 400px;
 }
 
-.btn-primary {
+/* .btn-primary {
   width: 280px;
-}
+} */
 
 .sign-up-div {
   display: block;
@@ -83,6 +84,8 @@ form {
   color: rgb(0, 0, 0);
   text-decoration: none;
   font-weight: bold;
+  color: #ff6347;
+
 }
 
 .divider {
@@ -171,3 +174,91 @@ a {
   background-color: #ebf4f6;
   border: solid #ff6347;
 }
+
+.bar {
+  width: 280px!important;
+}
+
+.title {
+ text-align: center;
+ padding-top: 20px;
+ font-weight: bolder;
+}
+
+.quote {
+  background-color: #ff6347;
+  padding: 10px 20px;
+  text-align: center;
+  width: 100vw;
+}
+
+#login-container {
+  background-color: #ebf4f6;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.login-form {
+  padding: 0 25px 0 25px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+#landing-page-container {
+margin: 30px;
+}
+
+#description {
+padding-top: 50%;
+}
+
+.image-container {
+  position: relative;
+}
+
+#img-1 {
+  position: absolute;
+  left: 110px;
+  top: 42px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#img-2 {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  z-index: -1;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.left-container {
+  width: 60%;
+}
+
+#results {
+position: fixed;
+top: 0;
+width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+  .left-container {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  html {
+    background-color: #ebf4f6;
+  }
+
+  #login-container {
+    width: auto;
+  }
+}
+
