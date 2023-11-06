@@ -1,9 +1,13 @@
 <link rel="stylesheet" href="/css/add-task.css">
-<div class="row mt-4">
-  <div class="col-md-6">
+<div class="row mt-4 justify-content-center">
+  <div class="col-lg-6 col-md-12">
 
     <form class="form new-task-form">
+      {{#if update}}
+      <h3>Update Task:</h3>
+      {{else}}
       <h3>Create a New Task:</h3>
+      {{/if}}
       {{!-- task title --}}
       <div>
         <label id="id" for="task-title-input" data-id="{{task.id}}">Task Title:</label>
@@ -23,7 +27,7 @@
           <option value="completed" {{#if (and update (ifeq task.state "completed"))}}selected{{/if}}>Completed</option>
           <option value="hiatus" {{#if (and update (ifeq task.state "hiatus"))}}selected{{/if}}>Hiatus</option>
           <option value="abandoned" {{#if (and update (ifeq task.state "abandoned"))}}selected{{/if}}>Abandoned</option>
-          <option value="planned" {{#if (and update (ifeq task.state "planned"))}}selected{{/if}}>Planned</option>
+          <option value="todo" {{#if (and update (ifeq task.state "todo"))}}selected{{/if}}>Planned</option>
         </select>
       </div>
       {{!-- public/private switch --}}
@@ -32,7 +36,7 @@
         <input type="checkbox" name="" id="task-visibility-input">
       </div>
       <div class="form-group">
-        <button id="button" type="submit" class="btn-task btn-primary">Create</button>
+        <button id="button" type="submit" class="btn-task btn-primary">{{#if update}}Save{{else}}Create{{/if}}</button>
       </div>
     </form>
   </div>

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/task-page.css">
 
 <div class="row d-flex justify-content-center">
-    <aside id="tag-side" class="col-4 d-flex flex-column br-4 p-0">
+    <aside id="tag-side" class="d-flex flex-column br-4 p-0">
         {{#if tags}}
         {{#each tags as |tag|}}
         {{> tag-card}}
@@ -10,7 +10,7 @@
         <h3>No tags yet...</h3>
         {{/if}}
     </aside>
-    <section id="tasks" class="col-8">
+    <section id="tasks" class="">
         <div class="task-div">
             {{#if tasks}}
             {{#each tasks as |task|}}

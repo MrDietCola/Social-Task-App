@@ -85,7 +85,9 @@ h2 {
     cursor: pointer;
 }
 .comment-btn:hover {
-    background-color: #ff6347;
+    color: #ff6347!important;
+    background-color: #ebf4f6;
+    border: solid #ff6347;
 }
 
 .close-btn {

@@ -239,8 +239,7 @@ router.get('/tasks/:id', async (req, res) => {
       unlinkedTags = [];
       owner = false;
     }
-    console.log(req.session.user.id);
-    
+        
     res.render('task', { task, ...req.session, emotion, unlinkedTags, owner })
   } catch (err) {
     console.error(err);
