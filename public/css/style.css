@@ -260,6 +260,8 @@ width: 100%;
 
 }
 
+
+
 @media screen and (max-width: 1000px) {
   .left-container {
     display: none;
@@ -301,6 +303,13 @@ width: 100%;
 
   .shadow {
     box-shadow: none!important;
+  }
+
+  #main-container {
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 

@@ -12,7 +12,7 @@
 
     <div class="task-card-body">
         <p>{{description}}</p>
-        <div class="d-flex">
+        <div class="d-flex flex-wrap">
         {{#each task_by_taskTag as |taskTag|}}
             <a class="button-4" href="/tags/{{taskTag.id}}">{{taskTag.tag_name}}</a>
         {{/each}}
