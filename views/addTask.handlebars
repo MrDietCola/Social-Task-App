@@ -27,7 +27,7 @@
           <option value="completed" {{#if (and update (ifeq task.state "completed"))}}selected{{/if}}>Completed</option>
           <option value="hiatus" {{#if (and update (ifeq task.state "hiatus"))}}selected{{/if}}>Hiatus</option>
           <option value="abandoned" {{#if (and update (ifeq task.state "abandoned"))}}selected{{/if}}>Abandoned</option>
-          <option value="planned" {{#if (and update (ifeq task.state "planned"))}}selected{{/if}}>Planned</option>
+          <option value="todo" {{#if (and update (ifeq task.state "todo"))}}selected{{/if}}>Planned</option>
         </select>
       </div>
       {{!-- public/private switch --}}

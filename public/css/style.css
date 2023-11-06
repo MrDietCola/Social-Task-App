@@ -1,4 +1,8 @@
 /* <----- landing page ------> */
+html, body {
+  max-height: 100vh;
+}
+
 .landing-nav {
   font-weight: bolder;
   font-size: 35px;
