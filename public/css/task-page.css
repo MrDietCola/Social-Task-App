@@ -25,10 +25,6 @@ a {
   list-style: none;
 }
 
-a:hover {
-  /* text-decoration: underline; */
-}
-
 #tag-side a {
   color:#ebf4f6;
   display: flex;
@@ -75,7 +71,9 @@ a:hover {
   margin: 0 20px 10px 0;
 }
 #edit-btn:hover {
-  background-color: #ff6347;
+  color: #ff6347!important;
+  background-color: #ebf4f6;
+  border: solid #ff6347;
 }
 
 .button-4 {
@@ -172,13 +170,27 @@ h4 {
   width: 5%;
   border-top-right-radius: 4px;
   color: transparent;
-  /* position: absolute;
-  width: 50%;
-  height: 20px;
-  top: 0;
-  right: 0; */
 }
 
 .border {
   border: 5px solid black!important;
+}
+
+.friends-container {
+  /* background-color: #ff6347; */
+}
+
+.side {
+  margin-right: 15px;
+}
+
+.friends {
+  padding: 10px;
+  color: white!important;
+  background-color: #ff6347;
+}
+
+.friends:hover {
+  opacity: 75%;
+  text-decoration: none!important;
 }
