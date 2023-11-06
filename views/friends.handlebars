@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/css/task-page.css">
-<div id="friends-page-body">
-  <div class="d-flex">
-    <div class="">
+<div id="friends-page-body d-flex w-100">
+  <div class="d-flex justify-content-around" id="box">
+    <div class="side">
       <h2>Welcome {{user.first_name}}! </h2>
-      <div>
+      <div class="friends-container">
         {{#each friends as |friend|}}
-        <a href="/user/{{friend.user.id}}">{{friend.user.username}}</a>
+        <a href="/user/{{friend.user.id}}" class="friends">{{friend.user.username}}</a>
         {{/each}}
       </div>
     </div>

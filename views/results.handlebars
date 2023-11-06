@@ -5,7 +5,7 @@
 {{/if}}
   {{#each users as |user|}}
     <div class="user-card max-width w-100">
-      <a href="/user/{{user.id}}" class="none"><h4>{{user.username}}</h4></a>
+      <a href="/user/{{user.id}}" class="none "><h4>{{user.username}}</h4></a>
     </div>
   {{/each}}
 
@@ -14,7 +14,7 @@
 {{/if}}
   {{#each tags as |tag|}}
     <div class="user-card max-width w-100">
-      <a href="/tags/{{tag.id}}" class="none"><h4>{{tag.tag_name}}</h4></a>
+      <a href="/tags/{{tag.id}}" class="none "><h4>{{tag.tag_name}}</h4></a>
     </div>
   {{/each}}
 
@@ -24,7 +24,7 @@
   {{#each tasks as |task|}}
     <div class="user-card max-width w-100 ">
       <div class="d-flex justify-content-between">
-        <a href="/tasks/{{task.id}}" class="none"><h4>{{task.title}}</h4></a>
+        <a href="/tasks/{{task.id}}" class="none "><h4>{{task.title}}</h4></a>
         <a href="/user/{{task.author_id}}" class="none"><h4>{{task.user.dataValues.username}}</h4></a>
       </div>
       <div class="card-body">

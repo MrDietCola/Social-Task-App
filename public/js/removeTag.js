@@ -1,4 +1,5 @@
 const removeTagHandler = async (event) => {
+    
     if (event.target.tagName.toLowerCase() == 'button') {
         const tag_id = event.target.getAttribute('data-tag');
         const task_id = document.getElementById('tag-list').getAttribute('data-task');

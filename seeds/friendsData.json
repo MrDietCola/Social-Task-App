@@ -23,5 +23,17 @@
   { "friend_id": 26, "user_id": 2 },
   { "friend_id": 9, "user_id": 2 },
   { "friend_id": 11, "user_id": 2 },
-  { "friend_id": 5, "user_id": 3 }
+  { "friend_id": 5, "user_id": 3 },
+  { "friend_id": 2, "user_id": 4 },
+  { "friend_id": 3, "user_id": 4 },
+  { "friend_id": 5, "user_id": 4 },
+  { "friend_id": 8, "user_id": 4 },
+  { "friend_id": 1, "user_id": 4 },
+  { "friend_id": 14, "user_id": 4 },
+  { "friend_id": 17, "user_id": 4},
+  { "friend_id": 23, "user_id": 4 },
+  { "friend_id": 26, "user_id": 4 },
+  { "friend_id": 9, "user_id": 4 },
+  { "friend_id": 6, "user_id": 4 },
+  { "friend_id": 5, "user_id": 4 }
 ]

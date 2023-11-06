@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 async function getEmotion(text) {
+
     if (!process.env.EMOTION_API) {
         return processResults(false);
     }
@@ -28,6 +29,7 @@ async function getEmotion(text) {
 }
 
 function processResults(res) {
+    console.log(res);
     if (!res) {
         return "Unavailable";
     }
@@ -41,7 +43,7 @@ function processResults(res) {
                 hasEmotion.push(`${key}(${res.emotion_scores[key]})`);
             }
         }
-        return hasEmotion.length > 0 ? 'Hints of ' + res.hasEmotion.join(', ') : "None";
+        return hasEmotion.length > 0 ? 'Hints of ' + hasEmotion.join(', ') : "None";
     }
 }
 
