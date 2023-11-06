@@ -46,7 +46,7 @@ img {
   display: block;
 }
 
-form {
+/* form {
   background-color: #ebf4f6;
   display: block;
   justify-items: center;
@@ -54,7 +54,7 @@ form {
   border-radius: 10px;
   width: 400px;
   z-index: 100;
-}
+} */
 
 .logo-tittle {
   display: flex;
@@ -199,6 +199,7 @@ a {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.signup-form, 
 .login-form {
   padding: 0 25px 0 25px;
 }
@@ -246,19 +247,60 @@ top: 0;
 width: 100%;
 }
 
+.mx-25 {
+  margin: 0 18%;
+}
+
+.login-container {
+  align-items: start;
+}
+
+.login {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
 @media screen and (max-width: 1000px) {
   .left-container {
     display: none;
   }
+
+  .mx-25 {
+    margin: 0 5%;
+  }
+
+   #tag-side {
+    display: none!important;
+  }
+
+  #tasks {
+    width: 100%!important;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .mx-25 {
+    margin: 0 5%;
+  }
+
+  .login-container {
+    flex-direction: column;
+    align-items: center;  
+  }
+
+  .login {
+    width: 100vw;
+    box-shadow: none;
+  }
 }
 
 @media screen and (max-width: 500px) {
-  html {
-    background-color: #ebf4f6;
-  }
-
   #login-container {
     width: auto;
+  }
+
+  .shadow {
+    box-shadow: none!important;
   }
 }
 

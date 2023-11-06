@@ -1,4 +1,4 @@
-<div class="row g-0">
+{{!-- <div class="row g-0">
   <div class="col-md-6">
     <h2>Login</h2>
 
@@ -49,7 +49,40 @@
       </div>
     </form>
   </div>
-</div>
+</div> --}}
 
+
+<div class="d-flex justify-content-around vh-100 mx-25 login-container">
+
+  <div class="d-flex flex-column justify-content-center align-items-center px-2 py-4 my-3 login">
+    <h2>Login</h2>
+    <form class="login-form" id="login-form">
+        <label for="inputEmail3" class="col-form-label"></label>
+        <input type="email" class="form-control" id="inputEmail3" placeholder="Email/Username">
+        <label for="inputPassword3" class="col-form-label" ></label>
+        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+        <button type="submit" class="btn btn-primary btn-block mt-4" >Sign In</button>
+      </form>
+  </div>
+
+  <div class="d-flex flex-column justify-content-center align-items-center px-2 py-4 my-3 login">
+    <h2>Signup</h2>
+    <form class="signup-form" id="signup-form">
+        <label for="inputEmail3" class="col-form-label"></label>
+        <input class="form-control" type="text" id="first_name-signup" placeholder="First Name"/>
+        <label for="last_name-signup" class="col-form-label"></label>
+        <input class="form-control" type="text" id="last_name-signup" placeholder="Last Name"/>
+        <label for="username-signup" class="col-form-label"></label>
+        <input class="form-control" type="text" id="username-signup" placeholder="Username"/>
+        <label for="inputEmail3" class="col-form-label"></label>
+        <input type="email" class="form-control" id="email-signup" placeholder="Email/Username">
+        <label for="password-signup" class="col-form-label"></label>
+        <input class="form-control" type="password" id="password-signup" placeholder="Password"/>
+        <label for="verifypassword-signup" class="col-form-label"></label>
+        <input class="form-control" type="password" id="verifypassword-signup" placeholder="Verify Password" />
+        <button type="submit" class="btn btn-primary btn-block mt-4">Sign Up</button>
+      </form>
+  </div>
+</div>
 <script src="./js/register.js"></script>
 <script src="./js/login.js"></script>

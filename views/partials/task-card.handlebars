@@ -2,7 +2,7 @@
     <div class="task-card-header bg-light d-flex justify-content-between">
         <h4><a href="/tasks/{{id}}">{{title}}</a></h4>
         <div class="task-info d-flex justify-content-between">
-            <a href="/user/{{author_id}}">{{user.username}}</a>
+            <a class="username" href="/user/{{author_id}}">{{user.username}}</a>
             <p>{{format_date date_created}}</p>
         </div>
         <div class="state {{state}}">

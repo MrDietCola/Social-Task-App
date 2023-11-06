@@ -25,6 +25,14 @@ a {
   list-style: none;
 }
 
+#tag-side {
+  width: 25%;
+}
+
+#tasks {
+  width: 75%;
+}
+
 #tag-side a {
   color:#ebf4f6;
   display: flex;
@@ -53,7 +61,8 @@ a {
   bottom: -10px;
   right: 6%;
   padding-right: 10px;
-  width: 40%;
+  justify-content: space-between;
+  width: fit-content;
 }
 
 #edit-btn {
@@ -193,4 +202,8 @@ h4 {
 .friends:hover {
   opacity: 75%;
   text-decoration: none!important;
+}
+
+.username {
+  padding-right: 15px;
 }

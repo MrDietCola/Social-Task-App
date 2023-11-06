@@ -17,13 +17,13 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
 
-    <div class="container-fluid">
+    <div class="container-fluid justify-content-between">
       <a class="navbar-brand" href="/">Get Sh*t Done</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/tasks">Home</a>
@@ -49,21 +49,23 @@
           </li>
           {{/if}}
         </ul>
+      <div class="d-flex justify-content-around">
+        <form class="d-flex search-bar " role="search">
+          <input id="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button id="search-button" class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            {{#if logged_in}}
+            <a class="nav-link" href="#" id="logout">Logout</a>
+            {{else}}
+            <a class="nav-link" href="/login" role="button" aria-expanded="false" id="">
+              Login
+            </a>
+            {{/if}}
+          </li>
       </div>
-      <form class="d-flex search-bar" role="search">
-        <input id="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button id="search-button" class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          {{#if logged_in}}
-          <a href="#" id="logout" style="text-decoration: none; color:#ff6347">logout</a>
-          {{else}}
-          <a class="nav-link" href="/login" role="button" aria-expanded="false" id="">
-            Login
-          </a>
-          {{/if}}
-        </li>
+      </div>
     </div>
   </nav>
   <div id="main-container">
